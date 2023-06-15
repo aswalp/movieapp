@@ -87,6 +87,14 @@ flutter:
       fonts:
         - asset: assets/fonts/Comforter/Comforter-Regular.ttf
           weight: 700
+    - family: Karla
+      fonts:
+        - asset: assets/fonts/Karla/Karla-Bold.ttf
+          weight: 700
+    - family: Righteous
+      fonts:
+        - asset: assets/fonts/Righteous/Righteous-Regular.ttf
+          weight: 700
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

@@ -75,17 +75,19 @@ class _SplashScreenUiState extends State<SplashScreenUi> {
     await Future.delayed(const Duration(seconds: 3));
 
     // ignore: use_build_context_synchronously
-    Navigator.push(
-        context,
-        PageRouteBuilder(
-          transitionDuration: const Duration(milliseconds: 500),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-              FadeTransition(
-            opacity: animation,
-            child: child,
-          ),
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const LoginUi(),
-        ));
+    Navigator.pushAndRemoveUntil(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 800),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(
+          opacity: animation,
+          child: child,
+        ),
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const LoginUi(),
+      ),
+      (route) => false,
+    );
   }
 }
