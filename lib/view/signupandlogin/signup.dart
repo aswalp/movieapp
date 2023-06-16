@@ -11,229 +11,240 @@ class SignupPage extends StatelessWidget {
     double sh = MediaQuery.of(context).size.height;
     double sw = MediaQuery.of(context).size.width;
     return Container(
+      padding: EdgeInsets.symmetric(
+          vertical: sh * (60 / Responsive.height),
+          horizontal: sw * (10 / Responsive.width)),
       height: sh * 0.8,
       width: sw,
-      decoration:  BoxDecoration(
-        color: Responsive.primerycolors,
-        borderRadius:const BorderRadius.only(
+      decoration: BoxDecoration(
+        color: Color(0xfff2be13),
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(40),
           topRight: Radius.circular(40),
         ),
       ),
-      child: Column(
-        children: [
-          SizedBox(
-            height: sh * (30 / Responsive.height),
-          ),
-          Text(
-            "Create your Account",
-            style: TextStyle(
-                color: Colors.black,
-                fontFamily: "Righteous",
-                fontSize: sw * (20 / Responsive.width)),
-          ),
-          SizedBox(
-            height: sh * (30 / Responsive.height),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: sw * (15 / Responsive.width),
-                vertical: sh * (10 / Responsive.height)),
-            child: TextField(
+      child: Container(
+        decoration: const BoxDecoration(
+            // color: Colors.black,
+            gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomRight,
+                colors: [
+              Color(0xff1e1601),
+              Color(0xff020100),
+            ])),
+        child: Column(
+          children: [
+            SizedBox(
+              height: sh * (30 / Responsive.height),
+            ),
+            Text(
+              "Create your Account",
               style: TextStyle(
-                  color: Colors.black, fontSize: sw * (12 / Responsive.width)),
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.email),
-                prefixIconColor: Colors.grey,
-                labelText: "Enter your Email",
-                labelStyle: TextStyle(
-                    color: Colors.grey,
-                    fontFamily: "Karla",
-                    fontSize: sw * (12 / Responsive.width)),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: const BorderSide(color: Colors.black, width: 2),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: const BorderSide(color: Colors.black, width: 2),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: const BorderSide(color: Colors.black, width: 2),
-                ),
-              ),
+                  color: Color(0xfff2be13),
+                  fontFamily: "Righteous",
+                  fontSize: sw * (20 / Responsive.width)),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: sw * (15 / Responsive.width),
-                vertical: sh * (10 / Responsive.height)),
-            child: TextField(
-              style: TextStyle(
-                  color: Colors.black, fontSize: sw * (12 / Responsive.width)),
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.key),
-                prefixIconColor: Colors.grey,
-                suffixIcon: const Icon(Icons.visibility_off),
-                suffixIconColor: Colors.grey,
-                labelText: "password",
-                labelStyle: TextStyle(
-                    color: Colors.grey,
-                    fontFamily: "Karla",
-                    fontSize: sw * (12 / Responsive.width)),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: const BorderSide(color: Colors.black, width: 2),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: const BorderSide(color: Colors.black, width: 2),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: const BorderSide(color: Colors.black, width: 2),
-                ),
-              ),
+            SizedBox(
+              height: sh * (30 / Responsive.height),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: sw * (15 / Responsive.width),
-                vertical: sh * (10 / Responsive.height)),
-            child: TextField(
-              style: TextStyle(
-                  color: Colors.black, fontSize: sw * (12 / Responsive.width)),
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.key),
-                prefixIconColor: Colors.grey,
-                suffixIcon: const Icon(Icons.visibility_off),
-                suffixIconColor: Colors.grey,
-                labelText: "confirm password",
-                labelStyle: TextStyle(
-                    color: Colors.grey,
-                    fontFamily: "Karla",
-                    fontSize: sw * (12 / Responsive.width)),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: const BorderSide(color: Colors.black, width: 2),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: const BorderSide(color: Colors.black, width: 2),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: const BorderSide(color: Colors.black, width: 2),
-                ),
-              ),
-            ),
-          ),
-          Container(
-            height: sh * (60 / Responsive.height),
-            width: sw * (150 / Responsive.width),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              // boxShadow: const [
-              //   BoxShadow(
-              //       offset: Offset(5, 2),
-              //       color: Colors.grey,
-              //       blurRadius: 10,
-              //       spreadRadius: 5),
-              // ],
-              gradient: const RadialGradient(
-                radius: 3,
-                focalRadius: 5,
-                colors: [Color(0xff181818), Color(0xff020202)],
-              ),
-            ),
-            child: Text(
-              "Continue",
-              style: TextStyle(
-                  color: const Color(0xffffffff),
-                  fontFamily: "Karla",
-                  fontSize: sw * (16 / Responsive.width)),
-            ),
-          ),
-          SizedBox(
-            height: sh * (20 / Responsive.height),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "----------------------------",
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: sw * (15 / Responsive.width),
+                  vertical: sh * (10 / Responsive.height)),
+              child: TextField(
+                keyboardType: TextInputType.emailAddress,
                 style: TextStyle(
-                    color: Colors.grey,
-                    fontFamily: "Righteous",
-                    fontSize: sw * (10 / Responsive.width)),
+                    color: Colors.white,
+                    fontSize: sw * (12 / Responsive.width)),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Color(0xff272111),
+                  prefixIcon: Icon(Icons.email),
+                  prefixIconColor: Colors.white,
+                  labelText: "Enter your Email",
+                  labelStyle: TextStyle(
+                      color: Colors.white,
+                      fontFamily: "Karla",
+                      fontSize: sw * (12 / Responsive.width)),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: const BorderSide(color: Colors.black, width: 2),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: const BorderSide(color: Colors.black, width: 2),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: const BorderSide(color: Colors.black, width: 2),
+                  ),
+                ),
               ),
-              Text(
-                "or",
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: sw * (15 / Responsive.width),
+                  vertical: sh * (10 / Responsive.height)),
+              child: TextField(
+                keyboardType: TextInputType.visiblePassword,
                 style: TextStyle(
-                    color: Colors.grey,
-                    fontFamily: "Righteous",
-                    fontSize: sw * (10 / Responsive.width)),
+                    color: Colors.white,
+                    fontSize: sw * (12 / Responsive.width)),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Color(0xff272111),
+                  prefixIcon: Icon(Icons.key),
+                  prefixIconColor: Colors.white,
+                  suffixIcon: const Icon(Icons.visibility_off),
+                  suffixIconColor: Colors.white,
+                  labelText: "password",
+                  labelStyle: TextStyle(
+                      color: Colors.white,
+                      fontFamily: "Karla",
+                      fontSize: sw * (12 / Responsive.width)),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: const BorderSide(color: Colors.black, width: 2),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: const BorderSide(color: Colors.black, width: 2),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: const BorderSide(color: Colors.black, width: 2),
+                  ),
+                ),
               ),
-              Text(
-                "----------------------------",
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: sw * (15 / Responsive.width),
+                  vertical: sh * (10 / Responsive.height)),
+              child: TextField(
+                keyboardType: TextInputType.visiblePassword,
                 style: TextStyle(
-                    color: Colors.grey,
-                    fontFamily: "Righteous",
-                    fontSize: sw * (10 / Responsive.width)),
+                    color: Colors.white,
+                    fontSize: sw * (12 / Responsive.width)),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Color(0xff272111),
+                  prefixIcon: Icon(Icons.key),
+                  prefixIconColor: Colors.white,
+                  suffixIcon: const Icon(Icons.visibility_off),
+                  suffixIconColor: Colors.white,
+                  labelText: "confirm password",
+                  labelStyle: TextStyle(
+                      color: Colors.white,
+                      fontFamily: "Karla",
+                      fontSize: sw * (12 / Responsive.width)),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide:
+                        const BorderSide(color: Colors.transparent, width: 0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide:
+                        const BorderSide(color: Colors.transparent, width: 0),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide:
+                        const BorderSide(color: Colors.transparent, width: 0),
+                  ),
+                ),
               ),
-            ],
-          ),
-          SizedBox(
-            height: sh * (20 / Responsive.height),
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            ),
             Container(
+              height: sh * (60 / Responsive.height),
+              width: sw * (150 / Responsive.width),
               alignment: Alignment.center,
-              height: 40,
-              width: 40,
-              padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(40), color: Colors.white),
-              child: Image.asset(
-                "assets/images/icons/go.jpg",
-                fit: BoxFit.contain,
+                borderRadius: BorderRadius.circular(20),
+                color: Color(0xfff2be13),
+
+                // boxShadow: const [
+                //   BoxShadow(
+                //       offset: Offset(5, 2),
+                //       color: Colors.white,
+                //       blurRadius: 10,
+                //       spreadRadius: 5),
+                // ],
+                // gradient: const RadialGradient(
+                //   radius: 3,
+                //   focalRadius: 5,
+                //   colors: [Color(0xff181818), Color(0xff020202)],
+                // ),
+              ),
+              child: Text(
+                "Continue",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: "Karla",
+                    fontSize: sw * (16 / Responsive.width)),
               ),
             ),
             SizedBox(
-              width: sw * (20 / Responsive.width),
+              height: sh * (20 / Responsive.height),
             ),
-            Container(
-              alignment: Alignment.center,
-              height: 40,
-              width: 40,
-              // padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(40), color: Colors.white),
-              child: Image.asset(
-                "assets/images/icons/fa.png",
-                fit: BoxFit.contain,
-              ),
+            Divider(
+              color: Colors.white,
             ),
             SizedBox(
-              width: sw * (20 / Responsive.width),
+              height: sh * (20 / Responsive.height),
             ),
-            Container(
-              alignment: Alignment.center,
-              height: 40,
-              width: 40,
-              padding: EdgeInsets.all(6),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(40), color: Colors.white),
-              child: Image.asset(
-                "assets/images/icons/apple.png",
-                color: Colors.black,
-                fit: BoxFit.contain,
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Container(
+                alignment: Alignment.center,
+                height: 40,
+                width: 40,
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(40),
+                    color: Colors.white),
+                child: Image.asset(
+                  "assets/images/icons/go.jpg",
+                  fit: BoxFit.contain,
+                ),
               ),
-            ),
-          ])
-        ],
+              SizedBox(
+                width: sw * (20 / Responsive.width),
+              ),
+              Container(
+                alignment: Alignment.center,
+                height: 40,
+                width: 40,
+                // padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(40),
+                    color: Colors.white),
+                child: Image.asset(
+                  "assets/images/icons/fa.png",
+                  fit: BoxFit.contain,
+                ),
+              ),
+              SizedBox(
+                width: sw * (20 / Responsive.width),
+              ),
+              Container(
+                alignment: Alignment.center,
+                height: 40,
+                width: 40,
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(40),
+                    color: Colors.white),
+                child: Image.asset(
+                  "assets/images/icons/apple.png",
+                  color: Colors.black,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ])
+          ],
+        ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movieapp/responsive/responisive.dart';
+import 'package:movieapp/view/home_page/homepage.dart';
 import 'package:movieapp/view/signupandlogin/signup.dart';
 
 class LoginUi extends StatelessWidget {
@@ -67,6 +68,7 @@ class LoginUi extends StatelessWidget {
                     horizontal: sw * (15 / Responsive.width),
                     vertical: sh * (10 / Responsive.height)),
                 child: TextField(
+                  keyboardType: TextInputType.emailAddress,
                   style: TextStyle(
                       color: Color(0xffffffff),
                       fontSize: sw * (12 / Responsive.width)),
@@ -101,6 +103,7 @@ class LoginUi extends StatelessWidget {
                     horizontal: sw * (15 / Responsive.width),
                     vertical: sh * (10 / Responsive.height)),
                 child: TextField(
+                  keyboardType: TextInputType.visiblePassword,
                   style: TextStyle(
                       color: const Color(0xffffffff),
                       fontSize: sw * (12 / Responsive.width)),
@@ -135,61 +138,57 @@ class LoginUi extends StatelessWidget {
               SizedBox(
                 height: sh * (20 / Responsive.height),
               ),
-              Container(
-                height: sh * (60 / Responsive.height),
-                width: sw * (150 / Responsive.width),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  // boxShadow: const [
-                  //   BoxShadow(
-                  //       offset: Offset(5, 2),
-                  //       color: Colors.grey,
-                  //       blurRadius: 10,
-                  //       spreadRadius: 5),
-                  // ],
-                  gradient: RadialGradient(
-                    radius: 3,
-                    focalRadius: 5,
-                    colors: [Responsive.primerycolors, Colors.orange],
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      transitionDuration: const Duration(milliseconds: 100),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) =>
+                              ScaleTransition(
+                        // opacity: animation,
+                        scale: animation,
+                        child: child,
+                      ),
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          const HomePageUi(),
+                    ),
+                  );
+                },
+                child: Container(
+                  height: sh * (60 / Responsive.height),
+                  width: sw * (150 / Responsive.width),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    // boxShadow: const [
+                    //   BoxShadow(
+                    //       offset: Offset(5, 2),
+                    //       color: Colors.grey,
+                    //       blurRadius: 10,
+                    //       spreadRadius: 5),
+                    // ],
+                    gradient: RadialGradient(
+                      radius: 3,
+                      focalRadius: 5,
+                      colors: [Responsive.primerycolors, Colors.orange],
+                    ),
                   ),
-                ),
-                child: Text(
-                  "Continue",
-                  style: TextStyle(
-                      color: const Color(0xff000000),
-                      fontFamily: "Karla",
-                      fontSize: sw * (16 / Responsive.width)),
+                  child: Text(
+                    "Continue",
+                    style: TextStyle(
+                        color: const Color(0xff000000),
+                        fontFamily: "Karla",
+                        fontSize: sw * (16 / Responsive.width)),
+                  ),
                 ),
               ),
               SizedBox(
                 height: sh * (20 / Responsive.height),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "----------------------------",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontFamily: "Righteous",
-                        fontSize: sw * (10 / Responsive.width)),
-                  ),
-                  Text(
-                    "or",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontFamily: "Righteous",
-                        fontSize: sw * (10 / Responsive.width)),
-                  ),
-                  Text(
-                    "----------------------------",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontFamily: "Righteous",
-                        fontSize: sw * (10 / Responsive.width)),
-                  ),
-                ],
+              Divider(
+                color: Colors.white,
               ),
               SizedBox(
                 height: sh * (20 / Responsive.height),
@@ -247,7 +246,7 @@ class LoginUi extends StatelessWidget {
         ),
         bottomNavigationBar: InkWell(
           onTap: () {
-            signupsheet(context, sh, sw);
+            signupsheet(context);
           },
           child: Container(
             height: sh * (60 / Responsive.height),
@@ -282,7 +281,7 @@ class LoginUi extends StatelessWidget {
     );
   }
 
-  Future<dynamic> signupsheet(BuildContext context, double sh, double sw) {
+  Future<dynamic> signupsheet(BuildContext context) {
     return showModalBottomSheet(
       backgroundColor: Colors.white,
       enableDrag: false,
@@ -290,7 +289,7 @@ class LoginUi extends StatelessWidget {
       useRootNavigator: true,
       showDragHandle: true,
       context: context,
-      builder: (context) => SignupPage(),
+      builder: (context) => const SignupPage(),
     );
   }
 }
