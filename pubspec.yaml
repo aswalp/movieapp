@@ -68,6 +68,10 @@ flutter:
     - assets/images/icons/
     - assets/images/newmovies/
     - assets/images/trendingmovies/
+    - assets/images/popularMovies/
+    - assets/images/animation/
+
+
 
 
   

@@ -1,10 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:movieapp/provider/animationmovies/animationmovies.dart';
 import 'package:movieapp/provider/newMovie_provider/newmovieprovider.dart';
-import 'package:movieapp/provider/trendingmovies/trendingprovider.dart';
+// import 'package:movieapp/provider/popular_movies/popularmovies.dart';
+// import 'package:movieapp/provider/trendingmovies/trendingprovider.dart';
 import 'package:movieapp/responsive/responisive.dart';
+import 'package:movieapp/view/home_page/widget/animationmovies.dart';
 import 'package:movieapp/view/home_page/widget/newmoviesroller.dart';
+import 'package:movieapp/view/home_page/widget/popularmovies.dart';
+import 'package:movieapp/view/home_page/widget/trendingmovies.dart';
 
 class HomePageUi extends ConsumerWidget {
   const HomePageUi({super.key});
@@ -19,6 +24,9 @@ class HomePageUi extends ConsumerWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            floating: true,
+            pinned: true,
+            backgroundColor: Color(0xff0a141c),
             centerTitle: true,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -44,9 +52,7 @@ class HomePageUi extends ConsumerWidget {
               background: buildnewmovieslider(sh),
             ),
             // primary: false,
-            floating: true,
-            pinned: true,
-            backgroundColor: Colors.transparent,
+
             // expandedHeight: 550,
             leading: Padding(
               padding: const EdgeInsets.all((8.0)),
@@ -55,7 +61,7 @@ class HomePageUi extends ConsumerWidget {
                 backgroundColor: Color(0x54FFFFFF),
                 child: IconButton(
                   onPressed: () {},
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.person,
                     color: Colors.black,
                   ),
@@ -67,7 +73,7 @@ class HomePageUi extends ConsumerWidget {
                 backgroundColor: Color(0x54FFFFFF),
                 child: IconButton(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.search,
                       color: Colors.black,
                     )),
@@ -104,37 +110,80 @@ class HomePageUi extends ConsumerWidget {
                     height: sh * (10 / Responsive.height),
                   ),
 
+                  TrendingMovies(sh: sh, sw: sw),
                   SizedBox(
-                    height: sh * (110 / Responsive.height),
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 5,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          height: sh * (100 / Responsive.height),
-                          width: sw * (150 / Responsive.width),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            image: DecorationImage(
-                                image: AssetImage(
-                                    ref.watch(trendingprovider)[index].images),
-                                fit: BoxFit.cover),
-                          ),
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return SizedBox(
-                          width: sw * (10 / Responsive.width),
-                        );
-                      },
-                    ),
-                  )
+                    height: sh * (20 / Responsive.height),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        " Popular Movies",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: "Righteous",
+                            fontSize: sw * (20 / Responsive.width)),
+                      ),
+                      Text(
+                        "See All",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: "Righteous",
+                            fontSize: sw * (12 / Responsive.width)),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: sh * (10 / Responsive.height),
+                  ),
+                  PopularMovies(sh: sh, sw: sw),
+                  SizedBox(
+                    height: sh * (20 / Responsive.height),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        " Animation Movies",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: "Righteous",
+                            fontSize: sw * (20 / Responsive.width)),
+                      ),
+                      Text(
+                        "See All",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: "Righteous",
+                            fontSize: sw * (12 / Responsive.width)),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: sh * (10 / Responsive.height),
+                  ),
+                  AnimationMovies(sh: sh, sw: sw),
                 ],
               ),
             ),
           ),
         ],
       ),
+
+      // bottomNavigationBar: BottomNavigationBar(items: const [
+      //   BottomNavigationBarItem(
+      //     label: "home",
+      //     icon: Icon(
+      //       Icons.home_outlined,
+      //     ),
+      //   ),
+      //   BottomNavigationBarItem(
+      //     label: "home",
+      //     icon: Icon(
+      //       Icons.home_outlined,
+      //     ),
+      //   )
+      // ]),
     );
   }
 
@@ -157,24 +206,3 @@ class HomePageUi extends ConsumerWidget {
     });
   }
 }
-
-//  SafeArea(
-//         child: Column(
-//           children: [
-//             CarouselSlider.builder(
-//               itemCount: 4,
-//               itemBuilder: (context, index, realIndex) {
-//                 return NewMoviesScroller(
-//                   index: index,
-//                 );
-//               },
-//               options: CarouselOptions(
-//                   enlargeStrategy: CenterPageEnlargeStrategy.height,
-//                   height: 350,
-//                   autoPlay: true,
-//                   reverse: true,
-//                   enlargeCenterPage: true),
-//             ),
-//           ],
-//         ),
-//       ),
