@@ -52,32 +52,39 @@ class SignupPage extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                   horizontal: sw * (15 / Responsive.width),
                   vertical: sh * (10 / Responsive.height)),
-              child: TextField(
-                keyboardType: TextInputType.emailAddress,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: sw * (12 / Responsive.width)),
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Color(0xff272111),
-                  prefixIcon: Icon(Icons.email),
-                  prefixIconColor: Colors.white,
-                  labelText: "Enter your Email",
-                  labelStyle: TextStyle(
+              child: SizedBox(
+                height: sh * (60 / Responsive.height),
+                width: sw,
+                child: TextField(
+                  keyboardType: TextInputType.emailAddress,
+                  style: TextStyle(
                       color: Colors.white,
-                      fontFamily: "Karla",
                       fontSize: sw * (12 / Responsive.width)),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: const BorderSide(color: Colors.black, width: 2),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: const BorderSide(color: Colors.black, width: 2),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: const BorderSide(color: Colors.black, width: 2),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Color(0xff272111),
+                    prefixIcon: Icon(Icons.email),
+                    prefixIconColor: Colors.white,
+                    labelText: "Enter your Email",
+                    labelStyle: TextStyle(
+                        color: Colors.white,
+                        fontFamily: "Karla",
+                        fontSize: sw * (12 / Responsive.width)),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide:
+                          const BorderSide(color: Colors.black, width: 2),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide:
+                          const BorderSide(color: Colors.black, width: 2),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide:
+                          const BorderSide(color: Colors.black, width: 2),
+                    ),
                   ),
                 ),
               ),
@@ -86,34 +93,41 @@ class SignupPage extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                   horizontal: sw * (15 / Responsive.width),
                   vertical: sh * (10 / Responsive.height)),
-              child: TextField(
-                keyboardType: TextInputType.visiblePassword,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: sw * (12 / Responsive.width)),
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Color(0xff272111),
-                  prefixIcon: Icon(Icons.key),
-                  prefixIconColor: Colors.white,
-                  suffixIcon: const Icon(Icons.visibility_off),
-                  suffixIconColor: Colors.white,
-                  labelText: "password",
-                  labelStyle: TextStyle(
+              child: SizedBox(
+                height: sh * (60 / Responsive.height),
+                width: sw,
+                child: TextField(
+                  keyboardType: TextInputType.visiblePassword,
+                  style: TextStyle(
                       color: Colors.white,
-                      fontFamily: "Karla",
                       fontSize: sw * (12 / Responsive.width)),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: const BorderSide(color: Colors.black, width: 2),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: const BorderSide(color: Colors.black, width: 2),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: const BorderSide(color: Colors.black, width: 2),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Color(0xff272111),
+                    prefixIcon: Icon(Icons.key),
+                    prefixIconColor: Colors.white,
+                    suffixIcon: const Icon(Icons.visibility_off),
+                    suffixIconColor: Colors.white,
+                    labelText: "password",
+                    labelStyle: TextStyle(
+                        color: Colors.white,
+                        fontFamily: "Karla",
+                        fontSize: sw * (12 / Responsive.width)),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide:
+                          const BorderSide(color: Colors.black, width: 2),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide:
+                          const BorderSide(color: Colors.black, width: 2),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide:
+                          const BorderSide(color: Colors.black, width: 2),
+                    ),
                   ),
                 ),
               ),
@@ -122,37 +136,41 @@ class SignupPage extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                   horizontal: sw * (15 / Responsive.width),
                   vertical: sh * (10 / Responsive.height)),
-              child: TextField(
-                keyboardType: TextInputType.visiblePassword,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: sw * (12 / Responsive.width)),
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Color(0xff272111),
-                  prefixIcon: Icon(Icons.key),
-                  prefixIconColor: Colors.white,
-                  suffixIcon: const Icon(Icons.visibility_off),
-                  suffixIconColor: Colors.white,
-                  labelText: "confirm password",
-                  labelStyle: TextStyle(
+              child: SizedBox(
+                height: sh * (60 / Responsive.height),
+                width: sw,
+                child: TextField(
+                  keyboardType: TextInputType.visiblePassword,
+                  style: TextStyle(
                       color: Colors.white,
-                      fontFamily: "Karla",
                       fontSize: sw * (12 / Responsive.width)),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide:
-                        const BorderSide(color: Colors.transparent, width: 0),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide:
-                        const BorderSide(color: Colors.transparent, width: 0),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide:
-                        const BorderSide(color: Colors.transparent, width: 0),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Color(0xff272111),
+                    prefixIcon: Icon(Icons.key),
+                    prefixIconColor: Colors.white,
+                    suffixIcon: const Icon(Icons.visibility_off),
+                    suffixIconColor: Colors.white,
+                    labelText: "confirm password",
+                    labelStyle: TextStyle(
+                        color: Colors.white,
+                        fontFamily: "Karla",
+                        fontSize: sw * (12 / Responsive.width)),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide:
+                          const BorderSide(color: Colors.transparent, width: 0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide:
+                          const BorderSide(color: Colors.transparent, width: 0),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide:
+                          const BorderSide(color: Colors.transparent, width: 0),
+                    ),
                   ),
                 ),
               ),
@@ -187,19 +205,19 @@ class SignupPage extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: sh * (20 / Responsive.height),
+              height: sh * (10 / Responsive.height),
             ),
             Divider(
               color: Colors.white,
             ),
             SizedBox(
-              height: sh * (20 / Responsive.height),
+              height: sh * (10 / Responsive.height),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Container(
                 alignment: Alignment.center,
-                height: 40,
-                width: 40,
+                height: sh * (40 / Responsive.height),
+                width: sw * (40 / Responsive.width),
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
@@ -214,8 +232,8 @@ class SignupPage extends StatelessWidget {
               ),
               Container(
                 alignment: Alignment.center,
-                height: 40,
-                width: 40,
+                height: sh * (40 / Responsive.height),
+                width: sw * (40 / Responsive.width),
                 // padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
@@ -230,8 +248,8 @@ class SignupPage extends StatelessWidget {
               ),
               Container(
                 alignment: Alignment.center,
-                height: 40,
-                width: 40,
+                height: sh * (40 / Responsive.height),
+                width: sw * (40 / Responsive.width),
                 padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),

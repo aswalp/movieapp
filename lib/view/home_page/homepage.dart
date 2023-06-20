@@ -9,24 +9,30 @@ import 'package:movieapp/responsive/responisive.dart';
 import 'package:movieapp/view/home_page/widget/animationmovies.dart';
 import 'package:movieapp/view/home_page/widget/newmoviesroller.dart';
 import 'package:movieapp/view/home_page/widget/popularmovies.dart';
+import 'package:movieapp/view/home_page/widget/profile_drawer.dart';
 import 'package:movieapp/view/home_page/widget/trendingmovies.dart';
+import 'package:movieapp/view/search/search.dart';
+import 'package:movieapp/view/see_all/see_all.dart';
 
 class HomePageUi extends ConsumerWidget {
   const HomePageUi({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    bool _mode = ref.watch(modeProvider);
+
     double sh = MediaQuery.of(context).size.height;
     double sw = MediaQuery.of(context).size.width;
     return Scaffold(
       // appBar: AppBar(),
-      backgroundColor: Color(0xff0a141c),
+      drawer: ProfileDrawer(sw: sw),
+      backgroundColor: _mode ? Color(0xff0a141c) : Colors.white,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
             floating: true,
             pinned: true,
-            backgroundColor: Color(0xff0a141c),
+            backgroundColor: _mode ? Color(0xff0a141c) : Colors.white,
             centerTitle: true,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -43,7 +49,7 @@ class HomePageUi extends ConsumerWidget {
                   style: TextStyle(
                       color: Responsive.primerycolors,
                       fontFamily: "Righteous",
-                      fontSize: sw * (28 / Responsive.width)),
+                      fontSize: sw * (24 / Responsive.width)),
                 ),
               ],
             ),
@@ -54,28 +60,40 @@ class HomePageUi extends ConsumerWidget {
             // primary: false,
 
             // expandedHeight: 550,
-            leading: Padding(
-              padding: const EdgeInsets.all((8.0)),
-              child: CircleAvatar(
-                // radius: 10,
-                backgroundColor: Color(0x54FFFFFF),
-                child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.person,
-                    color: Colors.black,
+            leading: Builder(builder: (BuildContext context) {
+              return Padding(
+                padding: const EdgeInsets.all((8.0)),
+                child: CircleAvatar(
+                  // radius: 10,
+                  backgroundColor: Color(0x54FFFFFF),
+                  child: IconButton(
+                    onPressed: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                    // tooltip:
+                    //     MaterialLocalizations.of(context).openAppDrawerTooltip,
+                    icon: Icon(
+                      Icons.person,
+                      color: !_mode ? Color(0xff0a141c) : Colors.white,
+                    ),
                   ),
                 ),
-              ),
-            ),
+              );
+            }),
             actions: [
               CircleAvatar(
                 backgroundColor: Color(0x54FFFFFF),
                 child: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SearchUi(),
+                          ));
+                    },
+                    icon: Icon(
                       Icons.search,
-                      color: Colors.black,
+                      color: !_mode ? Color(0xff0a141c) : Colors.white,
                     )),
               ),
             ],
@@ -93,16 +111,19 @@ class HomePageUi extends ConsumerWidget {
                       Text(
                         "Trending Now",
                         style: TextStyle(
-                            color: Colors.white,
+                            color: !_mode ? Color(0xff0a141c) : Colors.white,
                             fontFamily: "Righteous",
                             fontSize: sw * (20 / Responsive.width)),
                       ),
-                      Text(
-                        "See All",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: "Righteous",
-                            fontSize: sw * (12 / Responsive.width)),
+                      InkWell(
+                        onTap: () => moviesgrid(context, 0),
+                        child: Text(
+                          "See All",
+                          style: TextStyle(
+                              color: !_mode ? Color(0xff0a141c) : Colors.white,
+                              fontFamily: "Righteous",
+                              fontSize: sw * (12 / Responsive.width)),
+                        ),
                       ),
                     ],
                   ),
@@ -120,16 +141,19 @@ class HomePageUi extends ConsumerWidget {
                       Text(
                         " Popular Movies",
                         style: TextStyle(
-                            color: Colors.white,
+                            color: !_mode ? Color(0xff0a141c) : Colors.white,
                             fontFamily: "Righteous",
                             fontSize: sw * (20 / Responsive.width)),
                       ),
-                      Text(
-                        "See All",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: "Righteous",
-                            fontSize: sw * (12 / Responsive.width)),
+                      InkWell(
+                        onTap: () => moviesgrid(context, 1),
+                        child: Text(
+                          "See All",
+                          style: TextStyle(
+                              color: !_mode ? Color(0xff0a141c) : Colors.white,
+                              fontFamily: "Righteous",
+                              fontSize: sw * (12 / Responsive.width)),
+                        ),
                       ),
                     ],
                   ),
@@ -146,16 +170,19 @@ class HomePageUi extends ConsumerWidget {
                       Text(
                         " Animation Movies",
                         style: TextStyle(
-                            color: Colors.white,
+                            color: !_mode ? Color(0xff0a141c) : Colors.white,
                             fontFamily: "Righteous",
                             fontSize: sw * (20 / Responsive.width)),
                       ),
-                      Text(
-                        "See All",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: "Righteous",
-                            fontSize: sw * (12 / Responsive.width)),
+                      InkWell(
+                        onTap: () => moviesgrid(context, 2),
+                        child: Text(
+                          "See All",
+                          style: TextStyle(
+                              color: !_mode ? Color(0xff0a141c) : Colors.white,
+                              fontFamily: "Righteous",
+                              fontSize: sw * (12 / Responsive.width)),
+                        ),
                       ),
                     ],
                   ),
@@ -205,4 +232,14 @@ class HomePageUi extends ConsumerWidget {
       );
     });
   }
+}
+
+void moviesgrid(BuildContext context, int index) {
+  Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SeeAll(
+          ind: index,
+        ),
+      ));
 }

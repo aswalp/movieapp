@@ -4,12 +4,11 @@ import 'package:movieapp/provider/newMovie_provider/newmovieprovider.dart';
 import 'package:movieapp/responsive/responisive.dart';
 
 class NewMoviesScroller extends ConsumerWidget {
-  int index;
-
-  NewMoviesScroller({
+  const NewMoviesScroller({
     required this.index,
     super.key,
   });
+  final int index;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
