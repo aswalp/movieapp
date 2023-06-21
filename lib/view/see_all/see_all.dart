@@ -52,7 +52,7 @@ class SeeAll extends ConsumerWidget {
         backgroundColor: mode ? const Color(0xff0a141c) : Colors.white,
       ),
       body: GridView.builder(
-        itemCount: ref.watch(trendingprovider).length,
+        itemCount: ref.watch(pro[ind]).length,
         shrinkWrap: true,
         physics: const ScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
