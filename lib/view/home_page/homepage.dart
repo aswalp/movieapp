@@ -19,20 +19,20 @@ class HomePageUi extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    bool _mode = ref.watch(modeProvider);
+    bool mode = ref.watch(modeProvider);
 
     double sh = MediaQuery.of(context).size.height;
     double sw = MediaQuery.of(context).size.width;
     return Scaffold(
       // appBar: AppBar(),
       drawer: ProfileDrawer(sw: sw),
-      backgroundColor: _mode ? Color(0xff0a141c) : Colors.white,
+      backgroundColor: mode ? Color(0xff0a141c) : Colors.white,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
             floating: true,
             pinned: true,
-            backgroundColor: _mode ? Color(0xff0a141c) : Colors.white,
+            backgroundColor: mode ? Color(0xff0a141c) : Colors.white,
             centerTitle: true,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -47,13 +47,13 @@ class HomePageUi extends ConsumerWidget {
                 Text(
                   "Flash Movies",
                   style: TextStyle(
-                      color: Responsive.primerycolors,
+                      color: mode ? Responsive.primerycolors : Colors.black,
                       fontFamily: "Righteous",
                       fontSize: sw * (24 / Responsive.width)),
                 ),
               ],
             ),
-            expandedHeight: sh * (440 / Responsive.height),
+            expandedHeight: sh * (400 / Responsive.height),
             flexibleSpace: FlexibleSpaceBar(
               background: buildnewmovieslider(sh),
             ),
@@ -74,7 +74,7 @@ class HomePageUi extends ConsumerWidget {
                     //     MaterialLocalizations.of(context).openAppDrawerTooltip,
                     icon: Icon(
                       Icons.person,
-                      color: !_mode ? Color(0xff0a141c) : Colors.white,
+                      color: !mode ? Color(0xff0a141c) : Colors.white,
                     ),
                   ),
                 ),
@@ -93,7 +93,7 @@ class HomePageUi extends ConsumerWidget {
                     },
                     icon: Icon(
                       Icons.search,
-                      color: !_mode ? Color(0xff0a141c) : Colors.white,
+                      color: !mode ? Color(0xff0a141c) : Colors.white,
                     )),
               ),
             ],
@@ -111,7 +111,7 @@ class HomePageUi extends ConsumerWidget {
                       Text(
                         "Trending Now",
                         style: TextStyle(
-                            color: !_mode ? Color(0xff0a141c) : Colors.white,
+                            color: !mode ? Color(0xff0a141c) : Colors.white,
                             fontFamily: "Righteous",
                             fontSize: sw * (20 / Responsive.width)),
                       ),
@@ -120,7 +120,7 @@ class HomePageUi extends ConsumerWidget {
                         child: Text(
                           "See All",
                           style: TextStyle(
-                              color: !_mode ? Color(0xff0a141c) : Colors.white,
+                              color: !mode ? Color(0xff0a141c) : Colors.white,
                               fontFamily: "Righteous",
                               fontSize: sw * (12 / Responsive.width)),
                         ),
@@ -141,7 +141,7 @@ class HomePageUi extends ConsumerWidget {
                       Text(
                         " Popular Movies",
                         style: TextStyle(
-                            color: !_mode ? Color(0xff0a141c) : Colors.white,
+                            color: !mode ? Color(0xff0a141c) : Colors.white,
                             fontFamily: "Righteous",
                             fontSize: sw * (20 / Responsive.width)),
                       ),
@@ -150,7 +150,7 @@ class HomePageUi extends ConsumerWidget {
                         child: Text(
                           "See All",
                           style: TextStyle(
-                              color: !_mode ? Color(0xff0a141c) : Colors.white,
+                              color: !mode ? Color(0xff0a141c) : Colors.white,
                               fontFamily: "Righteous",
                               fontSize: sw * (12 / Responsive.width)),
                         ),
@@ -170,7 +170,7 @@ class HomePageUi extends ConsumerWidget {
                       Text(
                         " Animation Movies",
                         style: TextStyle(
-                            color: !_mode ? Color(0xff0a141c) : Colors.white,
+                            color: !mode ? Color(0xff0a141c) : Colors.white,
                             fontFamily: "Righteous",
                             fontSize: sw * (20 / Responsive.width)),
                       ),
@@ -179,7 +179,7 @@ class HomePageUi extends ConsumerWidget {
                         child: Text(
                           "See All",
                           style: TextStyle(
-                              color: !_mode ? Color(0xff0a141c) : Colors.white,
+                              color: !mode ? Color(0xff0a141c) : Colors.white,
                               fontFamily: "Righteous",
                               fontSize: sw * (12 / Responsive.width)),
                         ),

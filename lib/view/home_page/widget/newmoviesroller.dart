@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movieapp/provider/newMovie_provider/newmovieprovider.dart';
 import 'package:movieapp/responsive/responisive.dart';
+import 'package:movieapp/view/home_page/widget/Detail_page_function.dart';
 
 class NewMoviesScroller extends ConsumerWidget {
   const NewMoviesScroller({
@@ -19,18 +20,22 @@ class NewMoviesScroller extends ConsumerWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           SizedBox(
-            height: 30,
+            height: sw * (120 / Responsive.height),
           ),
-          Container(
-            width: sw * (270 / Responsive.width),
-            height: sh * (265 / Responsive.height),
-            padding: EdgeInsets.all(sw * (20 / Responsive.width)),
-            decoration: BoxDecoration(
-              // color: Colors.grey,
-              borderRadius: BorderRadius.circular(20),
-              image: DecorationImage(
-                  image: AssetImage(ref.watch(newmoviesprovider)[index].images),
-                  fit: BoxFit.cover),
+          InkWell(
+            onTap: () => detailfunction(context, newmoviesprovider, index),
+            child: Container(
+              width: sw * (270 / Responsive.width),
+              height: sh * (265 / Responsive.height),
+              padding: EdgeInsets.all(sw * (20 / Responsive.width)),
+              decoration: BoxDecoration(
+                // color: Colors.grey,
+                borderRadius: BorderRadius.circular(20),
+                image: DecorationImage(
+                    image:
+                        AssetImage(ref.watch(newmoviesprovider)[index].images),
+                    fit: BoxFit.cover),
+              ),
             ),
           ),
           Row(
@@ -41,7 +46,7 @@ class NewMoviesScroller extends ConsumerWidget {
                 margin: EdgeInsets.only(left: sw * (10 / Responsive.width)),
                 padding: EdgeInsets.all(sw * (8 / Responsive.width)),
                 decoration: BoxDecoration(
-                  color: Color(0xff272111),
+                  color: const Color(0xff272111),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Row(
@@ -69,7 +74,7 @@ class NewMoviesScroller extends ConsumerWidget {
                 margin: EdgeInsets.only(right: sw * (10 / Responsive.width)),
                 padding: EdgeInsets.all(sw * (8 / Responsive.width)),
                 decoration: BoxDecoration(
-                  color: Color(0xff272111),
+                  color: const Color(0xff272111),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(

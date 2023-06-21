@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movieapp/models/newmoviesl_model.dart';
 import 'package:movieapp/provider/animationmovies/animationmovies.dart';
 import 'package:movieapp/provider/popular_movies/popularmovies.dart';
 import 'package:movieapp/provider/trendingmovies/trendingprovider.dart';
 import 'package:movieapp/responsive/responisive.dart';
+import 'package:movieapp/view/home_page/widget/Detail_page_function.dart';
+import 'package:movieapp/view/home_page/widget/profile_drawer.dart';
 
 class SeeAll extends ConsumerWidget {
   const SeeAll({
@@ -14,15 +17,17 @@ class SeeAll extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    List<Provider> pro = [
+    bool mode = ref.watch(modeProvider);
+
+    List<Provider<List<Newmovies>>> pro = [
       trendingprovider,
       popMoviesprovider,
       animationprovider,
     ];
-    double sh = MediaQuery.of(context).size.height;
+    // double sh = MediaQuery.of(context).size.height;
     double sw = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Color(0xff0a141c),
+      backgroundColor: mode ? const Color(0xff0a141c) : Colors.white,
       appBar: AppBar(
         centerTitle: true,
         title: Text(
@@ -32,7 +37,7 @@ class SeeAll extends ConsumerWidget {
                   ? "Populur"
                   : "Animation",
           style: TextStyle(
-              color: Responsive.primerycolors,
+              color: mode ? Responsive.primerycolors : Colors.black,
               fontFamily: "Righteous",
               fontSize: sw * (24 / Responsive.width)),
         ),
@@ -40,11 +45,11 @@ class SeeAll extends ConsumerWidget {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back,
-              color: Colors.white,
+              color: mode ? Colors.white : Colors.black,
             )),
-        backgroundColor: Color(0xff0a141c),
+        backgroundColor: mode ? const Color(0xff0a141c) : Colors.white,
       ),
       body: GridView.builder(
         itemCount: ref.watch(trendingprovider).length,
@@ -56,14 +61,17 @@ class SeeAll extends ConsumerWidget {
             mainAxisSpacing: 8,
             crossAxisSpacing: 8),
         itemBuilder: (context, index) {
-          return Container(
-            // height: sh * (180 / Responsive.height),
-            // width: sw * (130 / Responsive.width),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              image: DecorationImage(
-                  image: AssetImage(ref.watch(pro[ind])[index].images),
-                  fit: BoxFit.cover),
+          return InkWell(
+            onTap: () => detailfunction(context, pro[ind], index),
+            child: Container(
+              // height: sh * (180 / Responsive.height),
+              // width: sw * (130 / Responsive.width),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                image: DecorationImage(
+                    image: AssetImage(ref.watch(pro[ind])[index].images),
+                    fit: BoxFit.cover),
+              ),
             ),
           );
         },
