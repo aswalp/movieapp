@@ -70,7 +70,7 @@ class MovieDetailsUi extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
-                        ref.watch(provider)[index].name,
+                        item.name,
                         style: TextStyle(
                             color: Responsive.primerycolors,
                             fontFamily: "Righteous",
@@ -92,7 +92,7 @@ class MovieDetailsUi extends ConsumerWidget {
                             size: 16,
                           ),
                           Text(
-                            ref.watch(provider)[index].rating.toString(),
+                            item.rating.toString(),
                             style: TextStyle(
                                 color: Responsive.primerycolors,
                                 fontFamily: "Righteous",
@@ -113,7 +113,7 @@ class MovieDetailsUi extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    ref.watch(provider)[index].description,
+                    item.description,
                     style: TextStyle(
                         color: Responsive.primerycolors,
                         fontFamily: "Righteous",
