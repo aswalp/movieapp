@@ -42,7 +42,7 @@ class TrendingMovies extends ConsumerWidget {
         itemCount: 5,
         itemBuilder: (context, index) {
           return InkWell(
-            onTap: () => detailfunction(context, trendingprovider, index),
+            onTap: () => detailfunction(context, maintrendindday, index),
             child: Container(
               height: sh * (180 / Responsive.height),
               width: sw * (130 / Responsive.width),

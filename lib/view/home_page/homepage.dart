@@ -4,14 +4,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movieapp/models/main_movie_model.dart';
 // import 'package:movieapp/provider/animationmovies/animationmovies.dart';
 import 'package:movieapp/provider/newMovie_provider/newmovieprovider.dart';
+import 'package:movieapp/provider/popular_movies/popularmovies.dart';
+import 'package:movieapp/provider/top_rated/toprated.dart';
+import 'package:movieapp/provider/trendingmovies/trendingprovider.dart';
+import 'package:movieapp/provider/upcoming_provider/upcoming_provider.dart';
 // import 'package:movieapp/provider/popular_movies/popularmovies.dart';
 // import 'package:movieapp/provider/trendingmovies/trendingprovider.dart';
 import 'package:movieapp/responsive/responisive.dart';
+// import 'package:movieapp/utilities/api_key.dart';
 import 'package:movieapp/view/home_page/widget/top_rated.dart';
 import 'package:movieapp/view/home_page/widget/newmoviesroller.dart';
 import 'package:movieapp/view/home_page/widget/popularmovies.dart';
 import 'package:movieapp/view/home_page/widget/profile_drawer.dart';
 import 'package:movieapp/view/home_page/widget/trendingmovies.dart';
+import 'package:movieapp/view/home_page/widget/upcomingmovies.dart';
 import 'package:movieapp/view/search/search.dart';
 import 'package:movieapp/view/see_all/see_all.dart';
 
@@ -55,7 +61,7 @@ class HomePageUi extends ConsumerWidget {
                 ),
               ],
             ),
-            expandedHeight: sh * (400 / Responsive.height),
+            expandedHeight: sh * (430 / Responsive.height),
             flexibleSpace: FlexibleSpaceBar(
               background: newmoivemain.when(
                 data: (data) => buildnewmovieslider(sh, data),
@@ -130,7 +136,7 @@ class HomePageUi extends ConsumerWidget {
                             fontSize: sw * (20 / Responsive.width)),
                       ),
                       InkWell(
-                        onTap: () => moviesgrid(context, 0),
+                        onTap: () => moviesgrid(context, maintrendindday, 0),
                         child: Text(
                           "See All",
                           style: TextStyle(
@@ -160,7 +166,7 @@ class HomePageUi extends ConsumerWidget {
                             fontSize: sw * (20 / Responsive.width)),
                       ),
                       InkWell(
-                        onTap: () => moviesgrid(context, 1),
+                        onTap: () => moviesgrid(context, mainpopmovies, 1),
                         child: Text(
                           "See All",
                           style: TextStyle(
@@ -189,7 +195,8 @@ class HomePageUi extends ConsumerWidget {
                             fontSize: sw * (20 / Responsive.width)),
                       ),
                       InkWell(
-                        onTap: () => moviesgrid(context, 2),
+                        onTap: () =>
+                            moviesgrid(context, maintopratedprovider, 2),
                         child: Text(
                           "See All",
                           style: TextStyle(
@@ -204,6 +211,37 @@ class HomePageUi extends ConsumerWidget {
                     height: sh * (10 / Responsive.height),
                   ),
                   AnimationMovies(sh: sh, sw: sw),
+                  SizedBox(
+                    height: sh * (20 / Responsive.height),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        " UpComing Movies",
+                        style: TextStyle(
+                            color: !mode ? Color(0xff0a141c) : Colors.white,
+                            fontFamily: "Righteous",
+                            fontSize: sw * (20 / Responsive.width)),
+                      ),
+                      InkWell(
+                        onTap: () =>
+                            moviesgrid(context, mainupcomingprovider, 3),
+                        child: Text(
+                          "See All",
+                          style: TextStyle(
+                              color: !mode ? Color(0xff0a141c) : Colors.white,
+                              fontFamily: "Righteous",
+                              fontSize: sw * (12 / Responsive.width)),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: sh * (10 / Responsive.height),
+                  ),
+
+                  UpComingMovies(sh: sh, sw: sw),
                 ],
               ),
             ),
@@ -239,7 +277,7 @@ class HomePageUi extends ConsumerWidget {
         },
         options: CarouselOptions(
             enlargeStrategy: CenterPageEnlargeStrategy.height,
-            height: sh * (350 / Responsive.height),
+            height: sh * (430 / Responsive.height),
             autoPlay: true,
             reverse: true,
             enlargeCenterPage: true),
@@ -248,12 +286,14 @@ class HomePageUi extends ConsumerWidget {
   }
 }
 
-void moviesgrid(BuildContext context, int index) {
+void moviesgrid(
+    BuildContext context, FutureProvider<MainMovieModels> pro, int val) {
   Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => SeeAll(
-          ind: index,
+          ind: pro,
+          val: val,
         ),
       ));
 }

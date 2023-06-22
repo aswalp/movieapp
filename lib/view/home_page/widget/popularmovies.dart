@@ -42,7 +42,7 @@ class PopularMovies extends ConsumerWidget {
         itemCount: 5,
         itemBuilder: (context, index) {
           return InkWell(
-            onTap: () => detailfunction(context, popMoviesprovider, index),
+            onTap: () => detailfunction(context, mainpopmovies, index),
             child: Container(
               height: sh * (180 / Responsive.height),
               width: sw * (130 / Responsive.width),

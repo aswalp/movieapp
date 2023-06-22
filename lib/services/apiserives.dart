@@ -79,6 +79,23 @@ class Apiservices {
     }
     throw Exception();
   }
+
+  Future<MainMovieModels> getupcoming() async {
+    try {
+      Response response = await dio.get(
+        "/3/movie/upcoming",
+      );
+
+      if (response.statusCode == 200) {
+        String json = jsonEncode(response.data);
+
+        return mainMovieModelsFromJson(json);
+      }
+    } on DioException catch (e) {
+      throw Exception(e);
+    }
+    throw Exception();
+  }
 }
 
 final apiservicesProvider = Provider<Apiservices>((ref) => Apiservices());

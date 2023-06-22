@@ -41,10 +41,10 @@ class NewMoviesScroller extends ConsumerWidget {
       mainAxisSize: MainAxisSize.max,
       children: [
         SizedBox(
-          height: sw * (120 / Responsive.height),
+          height: sw * (160 / Responsive.height),
         ),
         InkWell(
-          onTap: () => detailfunction(context, newmoviesprovider, index),
+          onTap: () => detailfunction(context, mainnowplayprovider, index),
           child: Container(
             width: sw * (270 / Responsive.width),
             height: sh * (265 / Responsive.height),
@@ -53,9 +53,8 @@ class NewMoviesScroller extends ConsumerWidget {
               // color: Colors.grey,
               borderRadius: BorderRadius.circular(20),
               image: DecorationImage(
-                  image: NetworkImage(ApiKey.imagekey +
-                      "/w500/" +
-                      data.results![index].posterPath!),
+                  image: NetworkImage(
+                      "${ApiKey.imagekey}/w500/${data.results![index].posterPath!}"),
                   fit: BoxFit.cover),
             ),
           ),
@@ -99,12 +98,15 @@ class NewMoviesScroller extends ConsumerWidget {
                 color: const Color(0xff272111),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Text(
-                data.results![index].originalTitle!,
-                style: TextStyle(
-                    color: Responsive.primerycolors,
-                    fontFamily: "Righteous",
-                    fontSize: sw * (12 / Responsive.width)),
+              child: SizedBox(
+                width: 150,
+                child: Text(
+                  data.results![index].title!,
+                  style: TextStyle(
+                      color: Responsive.primerycolors,
+                      fontFamily: "Righteous",
+                      fontSize: sw * (12 / Responsive.width)),
+                ),
               ),
             ),
           ],
