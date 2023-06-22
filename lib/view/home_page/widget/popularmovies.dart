@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movieapp/models/main_movie_model.dart';
 import 'package:movieapp/provider/popular_movies/popularmovies.dart';
 import 'package:movieapp/responsive/responisive.dart';
+import 'package:movieapp/utilities/api_key.dart';
 import 'package:movieapp/view/home_page/widget/Detail_page_function.dart';
 
 class PopularMovies extends ConsumerWidget {
@@ -16,6 +18,23 @@ class PopularMovies extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    var maindatapop = ref.watch(mainpopmovies);
+    return maindatapop.when(
+      data: (data) => listvewpop(ref, data),
+      error: (error, stackTrace) {
+        return const Center(
+          child: Text("no data"),
+        );
+      },
+      loading: () {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+  }
+
+  SizedBox listvewpop(WidgetRef ref, MainMovieModels data) {
     return SizedBox(
       height: sh * (190 / Responsive.height),
       child: ListView.separated(
@@ -30,8 +49,8 @@ class PopularMovies extends ConsumerWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 image: DecorationImage(
-                    image:
-                        AssetImage(ref.watch(popMoviesprovider)[index].images),
+                    image: NetworkImage(
+                        "${ApiKey.imagekey}/w500/${data.results![index].posterPath!}"),
                     fit: BoxFit.cover),
               ),
             ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movieapp/models/newmoviesl_model.dart';
-import 'package:movieapp/provider/animationmovies/animationmovies.dart';
+import 'package:movieapp/provider/top_rated/toprated.dart';
 import 'package:movieapp/provider/popular_movies/popularmovies.dart';
 import 'package:movieapp/provider/trendingmovies/trendingprovider.dart';
 import 'package:movieapp/responsive/responisive.dart';

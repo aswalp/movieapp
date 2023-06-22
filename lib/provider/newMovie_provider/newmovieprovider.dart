@@ -1,5 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movieapp/models/main_movie_model.dart';
 import 'package:movieapp/models/newmoviesl_model.dart';
+
+import '../../services/apiserives.dart';
 
 final newmoviesprovider = Provider<List<Newmovies>>((ref) => [
       Newmovies(
@@ -23,3 +26,7 @@ final newmoviesprovider = Provider<List<Newmovies>>((ref) => [
           description: "Drama/thriller/action",
           rating: 4.5),
     ]);
+
+final mainnowplayprovider = FutureProvider<MainMovieModels>((ref) async {
+  return ref.watch(apiservicesProvider).getnowplay();
+});

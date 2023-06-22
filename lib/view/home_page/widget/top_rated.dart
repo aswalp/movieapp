@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:movieapp/provider/animationmovies/animationmovies.dart';
+import 'package:movieapp/models/main_movie_model.dart';
+import 'package:movieapp/provider/top_rated/toprated.dart';
 import 'package:movieapp/responsive/responisive.dart';
+import 'package:movieapp/utilities/api_key.dart';
 import 'package:movieapp/view/home_page/widget/Detail_page_function.dart';
 
 class AnimationMovies extends ConsumerWidget {
@@ -16,6 +18,24 @@ class AnimationMovies extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    var maintoprated = ref.watch(maintopratedprovider);
+
+    return maintoprated.when(
+      data: (data) => topratedlist(ref, data),
+      error: (error, stackTrace) {
+        return const Center(
+          child: Text("error"),
+        );
+      },
+      loading: () {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+  }
+
+  SizedBox topratedlist(WidgetRef ref, MainMovieModels data) {
     return SizedBox(
       height: sh * (190 / Responsive.height),
       child: ListView.separated(
@@ -30,8 +50,8 @@ class AnimationMovies extends ConsumerWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 image: DecorationImage(
-                    image:
-                        AssetImage(ref.watch(animationprovider)[index].images),
+                    image: NetworkImage(
+                        "${ApiKey.imagekey}/w500/${data.results![index].posterPath}"),
                     fit: BoxFit.cover),
               ),
             ),

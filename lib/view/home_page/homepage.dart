@@ -1,12 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movieapp/models/main_movie_model.dart';
 // import 'package:movieapp/provider/animationmovies/animationmovies.dart';
 import 'package:movieapp/provider/newMovie_provider/newmovieprovider.dart';
 // import 'package:movieapp/provider/popular_movies/popularmovies.dart';
 // import 'package:movieapp/provider/trendingmovies/trendingprovider.dart';
 import 'package:movieapp/responsive/responisive.dart';
-import 'package:movieapp/view/home_page/widget/animationmovies.dart';
+import 'package:movieapp/view/home_page/widget/top_rated.dart';
 import 'package:movieapp/view/home_page/widget/newmoviesroller.dart';
 import 'package:movieapp/view/home_page/widget/popularmovies.dart';
 import 'package:movieapp/view/home_page/widget/profile_drawer.dart';
@@ -20,6 +21,7 @@ class HomePageUi extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     bool mode = ref.watch(modeProvider);
+    var newmoivemain = ref.watch(mainnowplayprovider);
 
     double sh = MediaQuery.of(context).size.height;
     double sw = MediaQuery.of(context).size.width;
@@ -55,7 +57,19 @@ class HomePageUi extends ConsumerWidget {
             ),
             expandedHeight: sh * (400 / Responsive.height),
             flexibleSpace: FlexibleSpaceBar(
-              background: buildnewmovieslider(sh),
+              background: newmoivemain.when(
+                data: (data) => buildnewmovieslider(sh, data),
+                error: (error, stackTrace) {
+                  return const Center(
+                    child: Text("error"),
+                  );
+                },
+                loading: () {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              ),
             ),
             // primary: false,
 
@@ -168,7 +182,7 @@ class HomePageUi extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        " Animation Movies",
+                        " Top Rated Movies",
                         style: TextStyle(
                             color: !mode ? Color(0xff0a141c) : Colors.white,
                             fontFamily: "Righteous",
@@ -214,10 +228,10 @@ class HomePageUi extends ConsumerWidget {
     );
   }
 
-  Consumer buildnewmovieslider(double sh) {
+  Consumer buildnewmovieslider(double sh, MainMovieModels data) {
     return Consumer(builder: (context, ref, _) {
       return CarouselSlider.builder(
-        itemCount: ref.watch(newmoviesprovider).length,
+        itemCount: data.results!.length,
         itemBuilder: (context, index, realIndex) {
           return NewMoviesScroller(
             index: index,
