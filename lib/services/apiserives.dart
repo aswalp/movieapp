@@ -46,6 +46,23 @@ class Apiservices {
     throw Exception();
   }
 
+  Future<MainMovieModels> getTrendingweek() async {
+    try {
+      Response response = await dio.get(
+        "/3/trending/movie/week",
+      );
+
+      if (response.statusCode == 200) {
+        String json = jsonEncode(response.data);
+
+        return mainMovieModelsFromJson(json);
+      }
+    } on DioException catch (e) {
+      throw Exception(e);
+    }
+    throw Exception();
+  }
+
   Future<MainMovieModels> gettoprated() async {
     try {
       Response response = await dio.get(
@@ -85,6 +102,22 @@ class Apiservices {
       Response response = await dio.get(
         "/3/movie/upcoming",
       );
+
+      if (response.statusCode == 200) {
+        String json = jsonEncode(response.data);
+
+        return mainMovieModelsFromJson(json);
+      }
+    } on DioException catch (e) {
+      throw Exception(e);
+    }
+    throw Exception();
+  }
+
+  Future<MainMovieModels> getsearchmovies(String movie) async {
+    try {
+      Response response =
+          await dio.get("/3/search/movie", queryParameters: {"query": movie});
 
       if (response.statusCode == 200) {
         String json = jsonEncode(response.data);

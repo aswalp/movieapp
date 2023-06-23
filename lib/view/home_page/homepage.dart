@@ -11,6 +11,7 @@ import 'package:movieapp/provider/upcoming_provider/upcoming_provider.dart';
 // import 'package:movieapp/provider/popular_movies/popularmovies.dart';
 // import 'package:movieapp/provider/trendingmovies/trendingprovider.dart';
 import 'package:movieapp/responsive/responisive.dart';
+import 'package:movieapp/services/apiserives.dart';
 // import 'package:movieapp/utilities/api_key.dart';
 import 'package:movieapp/view/home_page/widget/top_rated.dart';
 import 'package:movieapp/view/home_page/widget/newmoviesroller.dart';
@@ -89,6 +90,10 @@ class HomePageUi extends ConsumerWidget {
                   child: IconButton(
                     onPressed: () {
                       Scaffold.of(context).openDrawer();
+
+                      // print(ref
+                      //     .watch(apiservicesProvider)
+                      //     .getsearchmovies("cbi 5"));
                     },
                     // tooltip:
                     //     MaterialLocalizations.of(context).openAppDrawerTooltip,
@@ -105,11 +110,13 @@ class HomePageUi extends ConsumerWidget {
                 backgroundColor: Color(0x54FFFFFF),
                 child: IconButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SearchUi(),
-                          ));
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //       builder: (context) => SearchUi(),
+                      //     ));
+
+                      showSearch(context: context, delegate: Search());
                     },
                     icon: Icon(
                       Icons.search,

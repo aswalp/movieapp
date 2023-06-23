@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:movieapp/models/main_movie_model.dart';
+import 'package:movieapp/provider/trendingmovies/trendingprovider.dart';
 // import 'package:movieapp/models/newmoviesl_model.dart';
 // import 'package:movieapp/provider/top_rated/toprated.dart';
 // import 'package:movieapp/provider/popular_movies/popularmovies.dart';
@@ -22,8 +24,10 @@ class SeeAll extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    int daw = ref.watch(dayandweek);
     bool mode = ref.watch(modeProvider);
     var pro = ref.watch(ind);
+    var week = ref.watch(maintrendingweek);
 
     // double sh = MediaQuery.of(context).size.height;
     double sw = MediaQuery.of(context).size.width;
@@ -53,20 +57,66 @@ class SeeAll extends ConsumerWidget {
               color: mode ? Colors.white : Colors.black,
             )),
         backgroundColor: mode ? const Color(0xff0a141c) : Colors.white,
+        bottom: val == 0
+            ? PreferredSize(
+                preferredSize: Size(sw, 55),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: FlutterToggleTab(
+                    // width in percent
+                    width: 40,
+                    borderRadius: 30,
+                    height: 30,
+                    selectedIndex: daw,
+                    selectedBackgroundColors: const [
+                      Color(0xFF141313),
+                      Color(0xDD171616)
+                    ],
+                    selectedTextStyle: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700),
+                    unSelectedTextStyle: const TextStyle(
+                        color: Colors.black87,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500),
+                    labels: const ["day", "week"],
+                    selectedLabelIndex: (index) {
+                      ref.read(dayandweek.notifier).state = index;
+                    },
+                    isScroll: true,
+                  ),
+                ),
+              )
+            : null,
       ),
-      body: pro.when(
-        data: (data) => gridlist(ref, data, ind),
-        error: (error, stackTrace) {
-          return const Center(
-            child: Text("error"),
-          );
-        },
-        loading: () {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      ),
+      body: val == 0 && daw == 1
+          ? week.when(
+              data: (data) => gridlist(ref, data, ind),
+              error: (error, stackTrace) {
+                return const Center(
+                  child: Text("error"),
+                );
+              },
+              loading: () {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            )
+          : pro.when(
+              data: (data) => gridlist(ref, data, ind),
+              error: (error, stackTrace) {
+                return const Center(
+                  child: Text("error"),
+                );
+              },
+              loading: () {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            ),
     );
   }
 
@@ -90,9 +140,8 @@ class SeeAll extends ConsumerWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               image: DecorationImage(
-                  image: NetworkImage(ApiKey.imagekey +
-                      "/w500/" +
-                      data.results![index].posterPath!),
+                  image: NetworkImage(
+                      "${ApiKey.imagekey}/w500/${data.results![index].posterPath!}"),
                   fit: BoxFit.cover),
             ),
           ),
@@ -101,3 +150,7 @@ class SeeAll extends ConsumerWidget {
     );
   }
 }
+
+final dayandweek = StateProvider<int>((ref) {
+  return 0;
+});
