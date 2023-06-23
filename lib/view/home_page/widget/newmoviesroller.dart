@@ -66,10 +66,6 @@ class NewMoviesScroller extends ConsumerWidget {
             Container(
               margin: EdgeInsets.only(left: sw * (10 / Responsive.width)),
               padding: EdgeInsets.all(sw * (8 / Responsive.width)),
-              decoration: BoxDecoration(
-                color: const Color(0xff272111),
-                borderRadius: BorderRadius.circular(10),
-              ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -94,10 +90,6 @@ class NewMoviesScroller extends ConsumerWidget {
             Container(
               margin: EdgeInsets.only(right: sw * (10 / Responsive.width)),
               padding: EdgeInsets.all(sw * (8 / Responsive.width)),
-              decoration: BoxDecoration(
-                color: const Color(0xff272111),
-                borderRadius: BorderRadius.circular(10),
-              ),
               child: SizedBox(
                 width: 150,
                 child: Text(

@@ -13,7 +13,7 @@ class LoginUi extends StatelessWidget {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        backgroundColor: const Color(0xff0a141c),
+        backgroundColor: const Color(0xff222222),
         body: SingleChildScrollView(
           child: Column(
             children: [

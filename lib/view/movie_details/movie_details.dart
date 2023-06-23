@@ -23,9 +23,9 @@ class MovieDetailsUi extends ConsumerWidget {
     var item = ref.watch(provider);
 
     return Scaffold(
-      backgroundColor: mode ? const Color(0xff0a141c) : Colors.white,
+      backgroundColor: mode ? const Color(0xff222222) : Colors.white,
       appBar: AppBar(
-        backgroundColor: mode ? const Color(0xff0a141c) : Colors.white,
+        backgroundColor: mode ? const Color(0xff222222) : Colors.white,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -46,7 +46,7 @@ class MovieDetailsUi extends ConsumerWidget {
       ),
       body: SingleChildScrollView(
         child: item.when(
-          data: (data) => detailview(sw, sh, data, index),
+          data: (data) => detailview(sw, sh, data, index, mode),
           error: (error, stackTrace) {
             return const Center(
               child: Text("error"),
@@ -62,15 +62,16 @@ class MovieDetailsUi extends ConsumerWidget {
     );
   }
 
-  Column detailview(double sw, double sh, MainMovieModels data, int index) {
+  Column detailview(
+      double sw, double sh, MainMovieModels data, int index, bool mode) {
     return Column(
       children: [
         SizedBox(
           width: sw,
-          height: sh * (250 / Responsive.height),
+          height: sh * (200 / Responsive.height),
           child: Image.network(
-            "${ApiKey.imagekey}/w500/${data.results![index].posterPath!}",
-            fit: BoxFit.fitHeight,
+            "${ApiKey.imagekey}/w500/${data.results![index].backdropPath!}",
+            fit: BoxFit.cover,
           ),
         ),
         Padding(
@@ -81,65 +82,96 @@ class MovieDetailsUi extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                // crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    padding: EdgeInsets.all(sw * (8 / Responsive.width)),
-                    decoration: BoxDecoration(
-                      color: const Color(0xff272111),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: SizedBox(
-                      width: 180,
-                      child: Text(
-                        data.results![index].originalTitle!,
-                        style: TextStyle(
-                            color: Responsive.primerycolors,
-                            fontFamily: "Righteous",
-                            fontSize: sw * (16 / Responsive.width)),
+                  Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      SizedBox(
+                        height: 80,
+                        width: 100,
                       ),
-                    ),
+                      Positioned(
+                        bottom: 1,
+                        child: Container(
+                          height: 130,
+                          width: 90,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: DecorationImage(
+                                  image: NetworkImage(
+                                      "${ApiKey.imagekey}/w500/${data.results![index].posterPath!}"),
+                                  fit: BoxFit.cover)),
+                        ),
+                      )
+                    ],
                   ),
-                  Container(
-                    padding: EdgeInsets.all(sw * (8 / Responsive.width)),
-                    decoration: BoxDecoration(
-                      color: const Color(0xff272111),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(
-                          Icons.star,
-                          color: Colors.orange,
-                          size: 16,
-                        ),
-                        Text(
-                          data.results![index].voteAverage!.toString(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: sw * (180 / Responsive.width),
+                        child: Text(
+                          data.results![index].title!,
                           style: TextStyle(
-                              color: Responsive.primerycolors,
+                              color: mode
+                                  ? Responsive.primerycolors
+                                  : Colors.black,
                               fontFamily: "Righteous",
-                              fontSize: sw * (12 / Responsive.width)),
+                              fontSize: sw * (16 / Responsive.width)),
                         ),
-                      ],
-                    ),
+                      ),
+                      Row(
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: 40,
+                            child: Text(
+                              data.results![index].originalLanguage!,
+                              style: TextStyle(
+                                  color: mode
+                                      ? Responsive.primerycolors
+                                      : Colors.black,
+                                  fontFamily: "Righteous",
+                                  fontSize: sw * (16 / Responsive.width)),
+                            ),
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(
+                                Icons.star,
+                                color: Colors.orange,
+                                size: 16,
+                              ),
+                              Text(
+                                "${data.results![index].voteAverage!.toStringAsFixed(1)}/10",
+                                style: TextStyle(
+                                    color: mode
+                                        ? Responsive.primerycolors
+                                        : Colors.black,
+                                    fontFamily: "Righteous",
+                                    fontSize: sw * (12 / Responsive.width)),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ],
               ),
               SizedBox(
                 height: sh * (10 / Responsive.height),
               ),
+              const Divider(),
               Container(
                 padding: EdgeInsets.all(sw * (8 / Responsive.width)),
-                decoration: BoxDecoration(
-                  color: const Color(0xff272111),
-                  borderRadius: BorderRadius.circular(10),
-                ),
                 child: Text(
                   data.results![index].overview!,
                   style: TextStyle(
-                      color: Responsive.primerycolors,
+                      color: mode ? Responsive.primerycolors : Colors.black,
                       fontFamily: "Righteous",
                       fontSize: sw * (18 / Responsive.width)),
                 ),

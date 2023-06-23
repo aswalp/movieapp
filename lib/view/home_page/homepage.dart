@@ -35,13 +35,13 @@ class HomePageUi extends ConsumerWidget {
     return Scaffold(
       // appBar: AppBar(),
       drawer: ProfileDrawer(sw: sw),
-      backgroundColor: mode ? Color(0xff0a141c) : Colors.white,
+      backgroundColor: mode ? Color(0xff222222) : Color(0xFFFFFFFF),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
             floating: true,
             pinned: true,
-            backgroundColor: mode ? Color(0xff0a141c) : Colors.white,
+            backgroundColor: mode ? Color(0xff222222) : Colors.white,
             centerTitle: true,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
