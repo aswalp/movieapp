@@ -5,6 +5,7 @@ import 'package:movieapp/provider/newMovie_provider/newmovieprovider.dart';
 import 'package:movieapp/responsive/responisive.dart';
 import 'package:movieapp/utilities/api_key.dart';
 import 'package:movieapp/view/home_page/widget/Detail_page_function.dart';
+import 'package:movieapp/view/home_page/widget/profile_drawer.dart';
 
 class NewMoviesScroller extends ConsumerWidget {
   const NewMoviesScroller({
@@ -17,11 +18,12 @@ class NewMoviesScroller extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     double sh = MediaQuery.of(context).size.height;
     double sw = MediaQuery.of(context).size.width;
+    bool mode = ref.watch(modeProvider);
 
     var nowplayingmain = ref.watch(mainnowplayprovider);
     return SingleChildScrollView(
         child: nowplayingmain.when(
-      data: (data) => nowplayinglist(sw, context, sh, ref, data),
+      data: (data) => nowplayinglist(sw, context, sh, ref, data, mode),
       error: (error, stackTrace) {
         return const Center(
           child: Text("error"),
@@ -36,7 +38,7 @@ class NewMoviesScroller extends ConsumerWidget {
   }
 
   Column nowplayinglist(double sw, BuildContext context, double sh,
-      WidgetRef ref, MainMovieModels data) {
+      WidgetRef ref, MainMovieModels data, bool mode) {
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -77,7 +79,7 @@ class NewMoviesScroller extends ConsumerWidget {
                   Text(
                     data.results![index].voteAverage.toString(),
                     style: TextStyle(
-                        color: Responsive.primerycolors,
+                        color: mode ? Responsive.primerycolors : Colors.black,
                         fontFamily: "Righteous",
                         fontSize: sw * (12 / Responsive.width)),
                   ),
@@ -95,7 +97,7 @@ class NewMoviesScroller extends ConsumerWidget {
                 child: Text(
                   data.results![index].title!,
                   style: TextStyle(
-                      color: Responsive.primerycolors,
+                      color: mode ? Responsive.primerycolors : Colors.black,
                       fontFamily: "Righteous",
                       fontSize: sw * (12 / Responsive.width)),
                 ),

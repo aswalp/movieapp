@@ -1,65 +1,196 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:movieapp/responsive/responisive.dart';
-// import 'package:movieapp/view/home_page/widget/profile_drawer.dart';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:movieapp/models/main_movie_model.dart';
+import 'package:movieapp/provider/searchprovider/searchprovider.dart';
+import 'package:movieapp/responsive/responisive.dart';
+import 'package:movieapp/utilities/api_key.dart';
+import 'package:movieapp/view/home_page/widget/Detail_page_function.dart';
+// import 'package:movieapp/services/apiserives.dart';
+import 'package:movieapp/view/home_page/widget/profile_drawer.dart';
 
-class Search extends SearchDelegate {
-  List<String> list = ["apple", "banana", "mango", "jackfruit", "grapes"];
-  @override
-  List<Widget>? buildActions(BuildContext context) {
-    return [
-      IconButton(
-          onPressed: () {
-            query = "";
-          },
-          icon: const Icon(Icons.clear))
-    ];
-  }
-
-  @override
-  Widget? buildLeading(BuildContext context) {
-    return IconButton(
-        onPressed: () {
-          close(context, null);
-        },
-        icon: const Icon(Icons.arrow_back));
-  }
+class SearchUi extends ConsumerWidget {
+  const SearchUi({super.key});
 
   @override
-  Widget buildResults(BuildContext context) {
-    List<String> matchqury = [];
+  Widget build(BuildContext context, WidgetRef ref) {
+    var search = ref.watch(searchMoviesProvider);
 
-    for (String i in list) {
-      if (i.toLowerCase().contains(query.toLowerCase())) {
-        matchqury.add(query);
-      }
-    }
-    return ListView.builder(
-      itemCount: matchqury.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(matchqury[index]),
-        );
-      },
+    TextEditingController _texteditingcontroller = TextEditingController();
+    bool mode = ref.watch(modeProvider);
+
+    double sh = MediaQuery.of(context).size.height;
+    double sw = MediaQuery.of(context).size.width;
+    return Scaffold(
+      backgroundColor: mode ? const Color(0xff0a141c) : Colors.white,
+      appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(
+              Icons.arrow_back,
+              color: !mode ? const Color(0xff0a141c) : Colors.white,
+            )),
+        backgroundColor: mode ? const Color(0xff0a141c) : Colors.white,
+        centerTitle: true,
+        title: Text(
+          "Search",
+          style: TextStyle(
+              color: mode ? Responsive.primerycolors : Colors.black,
+              fontFamily: "Righteous",
+              fontSize: sw * (24 / Responsive.width)),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: sw * (15 / Responsive.width),
+                  vertical: sh * (10 / Responsive.height)),
+              child: SizedBox(
+                height: sh * (60 / Responsive.height),
+                width: sw,
+                child: TextField(
+                  controller: _texteditingcontroller,
+                  onChanged: (value) {
+                    ref.read(searchValueProvider).value = value;
+                    print(value);
+                    _texteditingcontroller.text = value;
+                    ref.invalidate(searchMoviesProvider);
+                  },
+                  keyboardType: TextInputType.emailAddress,
+                  style: TextStyle(
+                      color: mode ? Colors.white : Colors.black,
+                      fontSize: sw * (12 / Responsive.width)),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor:
+                        mode ? const Color(0xff272111) : Color(0xFF878484),
+                    prefixIcon: const Icon(Icons.search),
+                    prefixIconColor: mode ? Colors.white : Colors.black,
+                    labelText: "Search Movies",
+                    labelStyle: TextStyle(
+                        color: mode ? Colors.white : Colors.black,
+                        fontFamily: "Karla",
+                        fontSize: sw * (12 / Responsive.width)),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide:
+                          const BorderSide(color: Colors.transparent, width: 2),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide:
+                          const BorderSide(color: Colors.transparent, width: 2),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide:
+                          const BorderSide(color: Colors.transparent, width: 2),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: sh,
+              child: search.when(
+                data: (data) => searchlist(data, sw, mode),
+                error: (error, stackTrace) => Text("error"),
+                loading: () => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    List<String> matchqury = [];
-
-    for (String i in list) {
-      if (i.toLowerCase().contains(query.toLowerCase())) {
-        matchqury.add(i);
-      }
-    }
-    return ListView.builder(
-      itemCount: matchqury.length,
+  ListView searchlist(MainMovieModels data, double sw, bool mode) {
+    // print(data);
+    return ListView.separated(
+      // shrinkWrap: true,
+      // physics: const ScrollPhysics(),
+      itemCount: data.results!.length,
       itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(matchqury[index]),
+        return InkWell(
+          onTap: () => detailfunction(context, searchMoviesProvider, index),
+          child: Container(
+            padding: EdgeInsets.all(5),
+            height: 120,
+            width: sw,
+            // decoration: BoxDecoration(color: Colors.transparent),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 120,
+                  width: 80,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.network(
+                      "${ApiKey.imagekey}/w500/${data.results![index].posterPath!}",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                        width: 250,
+                        child: Text(
+                          data.results![index].title!,
+                          style: TextStyle(
+                              color: Responsive.primerycolors,
+                              fontFamily: "Righteous",
+                              fontSize: sw * (16 / Responsive.width)),
+                        )),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.star,
+                          color: Colors.orange,
+                          size: 16,
+                        ),
+                        Text(
+                          data.results![index].voteAverage!.toStringAsFixed(1),
+                          style: TextStyle(
+                              color: mode
+                                  ? Responsive.primerycolors
+                                  : Colors.black,
+                              fontFamily: "Righteous",
+                              fontSize: sw * (12 / Responsive.width)),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      DateFormat("yyyy")
+                          .format(data.results![index].releaseDate!),
+                      style: TextStyle(
+                          color: mode ? Responsive.primerycolors : Colors.black,
+                          fontFamily: "Righteous",
+                          fontSize: sw * (12 / Responsive.width)),
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+      separatorBuilder: (BuildContext context, int index) {
+        return SizedBox(
+          height: 10,
         );
       },
     );
@@ -69,82 +200,67 @@ class Search extends SearchDelegate {
 
 
 
-// class SearchUi extends ConsumerWidget {
-//   const SearchUi({super.key});
+
+
+// import 'package:flutter/material.dart';
+
+// class Search extends SearchDelegate {
+//   List<String> list = ["apple", "banana", "mango", "jackfruit", "grapes"];
+//   @override
+//   List<Widget>? buildActions(BuildContext context) {
+//     return [
+//       IconButton(
+//           onPressed: () {
+//             query = "";
+//           },
+//           icon: const Icon(Icons.clear))
+//     ];
+//   }
 
 //   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     bool mode = ref.watch(modeProvider);
+//   Widget? buildLeading(BuildContext context) {
+//     return IconButton(
+//         onPressed: () {
+//           close(context, null);
+//         },
+//         icon: const Icon(Icons.arrow_back));
+//   }
 
-//     double sh = MediaQuery.of(context).size.height;
-//     double sw = MediaQuery.of(context).size.width;
-//     return Scaffold(
-//       backgroundColor: mode ? const Color(0xff0a141c) : Colors.white,
-//       appBar: AppBar(
-//         leading: IconButton(
-//             onPressed: () {
-//               Navigator.pop(context);
-//             },
-//             icon: Icon(
-//               Icons.arrow_back,
-//               color: !mode ? const Color(0xff0a141c) : Colors.white,
-//             )),
-//         backgroundColor: mode ? const Color(0xff0a141c) : Colors.white,
-//         centerTitle: true,
-//         title: Text(
-//           "Search",
-//           style: TextStyle(
-//               color: mode ? Responsive.primerycolors : Colors.black,
-//               fontFamily: "Righteous",
-//               fontSize: sw * (24 / Responsive.width)),
-//         ),
-//       ),
-//       body: Column(
-//         children: [
-//           Padding(
-//             padding: EdgeInsets.symmetric(
-//                 horizontal: sw * (15 / Responsive.width),
-//                 vertical: sh * (10 / Responsive.height)),
-//             child: SizedBox(
-//               height: sh * (60 / Responsive.height),
-//               width: sw,
-//               child: TextField(
-//                 keyboardType: TextInputType.emailAddress,
-//                 style: TextStyle(
-//                     color: mode ? Colors.white : Colors.black,
-//                     fontSize: sw * (12 / Responsive.width)),
-//                 decoration: InputDecoration(
-//                   filled: true,
-//                   fillColor: mode ? const Color(0xff272111) : Color(0xFF878484),
-//                   prefixIcon: const Icon(Icons.search),
-//                   prefixIconColor: mode ? Colors.white : Colors.black,
-//                   labelText: "Search Movies",
-//                   labelStyle: TextStyle(
-//                       color: mode ? Colors.white : Colors.black,
-//                       fontFamily: "Karla",
-//                       fontSize: sw * (12 / Responsive.width)),
-//                   focusedBorder: OutlineInputBorder(
-//                     borderRadius: BorderRadius.circular(20),
-//                     borderSide:
-//                         const BorderSide(color: Colors.transparent, width: 2),
-//                   ),
-//                   enabledBorder: OutlineInputBorder(
-//                     borderRadius: BorderRadius.circular(20),
-//                     borderSide:
-//                         const BorderSide(color: Colors.transparent, width: 2),
-//                   ),
-//                   border: OutlineInputBorder(
-//                     borderRadius: BorderRadius.circular(20),
-//                     borderSide:
-//                         const BorderSide(color: Colors.transparent, width: 2),
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
+//   @override
+//   Widget buildResults(BuildContext context) {
+//     List<String> matchqury = [];
+
+//     for (String i in list) {
+//       if (i.toLowerCase().contains(query.toLowerCase())) {
+//         matchqury.add(query);
+//       }
+//     }
+//     return ListView.builder(
+//       itemCount: matchqury.length,
+//       itemBuilder: (context, index) {
+//         return ListTile(
+//           title: Text(matchqury[index]),
+//         );
+//       },
+//     );
+//   }
+
+//   @override
+//   Widget buildSuggestions(BuildContext context) {
+//     List<String> matchqury = [];
+
+//     for (String i in list) {
+//       if (i.toLowerCase().contains(query.toLowerCase())) {
+//         matchqury.add(i);
+//       }
+//     }
+//     return ListView.builder(
+//       itemCount: matchqury.length,
+//       itemBuilder: (context, index) {
+//         return ListTile(
+//           title: Text(matchqury[index]),
+//         );
+//       },
 //     );
 //   }
 // }
-

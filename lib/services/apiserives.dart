@@ -8,6 +8,7 @@ import 'package:movieapp/utilities/api_key.dart';
 class Apiservices {
   static Dio dio = Dio(
     BaseOptions(
+        connectTimeout: Duration(milliseconds: 10000),
         baseUrl: "https://api.themoviedb.org",
         queryParameters: {"api_key": ApiKey.key}),
   );

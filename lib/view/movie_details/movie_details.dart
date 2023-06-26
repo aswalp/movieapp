@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:movieapp/models/genere_model.dart';
 import 'package:movieapp/models/main_movie_model.dart';
+import 'package:movieapp/provider/genre-provider/genre_provider.dart';
 // import 'package:movieapp/models/newmoviesl_model.dart';
 import 'package:movieapp/responsive/responisive.dart';
 import 'package:movieapp/utilities/api_key.dart';
+import 'package:movieapp/utilities/generefunction.dart';
 import 'package:movieapp/view/home_page/widget/profile_drawer.dart';
 
 class MovieDetailsUi extends ConsumerWidget {
@@ -46,7 +50,7 @@ class MovieDetailsUi extends ConsumerWidget {
       ),
       body: SingleChildScrollView(
         child: item.when(
-          data: (data) => detailview(sw, sh, data, index, mode),
+          data: (data) => detailview(sw, sh, data, index, mode, ref, context),
           error: (error, stackTrace) {
             return const Center(
               child: Text("error"),
@@ -62,15 +66,23 @@ class MovieDetailsUi extends ConsumerWidget {
     );
   }
 
-  Column detailview(
-      double sw, double sh, MainMovieModels data, int index, bool mode) {
+  Column detailview(double sw, double sh, MainMovieModels data, int index,
+      bool mode, WidgetRef ref, BuildContext context) {
+    // var generlistAsyncValue = ref.watch(genreList(context));
+    // var generlist = generlistAsyncValue.whenData((value) => value).value;
+
+    var id = data.results![index].genreIds;
+
+    var genlist = Genlist.g;
+
+    var c = generefunction(id!, genlist);
     return Column(
       children: [
         SizedBox(
           width: sw,
           height: sh * (200 / Responsive.height),
           child: Image.network(
-            "${ApiKey.imagekey}/w500/${data.results![index].backdropPath!}",
+            "${ApiKey.imagekey}/w500/${data.results![index].backdropPath ?? data.results![index].posterPath}",
             fit: BoxFit.cover,
           ),
         ),
@@ -126,9 +138,10 @@ class MovieDetailsUi extends ConsumerWidget {
                         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           SizedBox(
-                            width: 40,
+                            width: 150,
                             child: Text(
-                              data.results![index].originalLanguage!,
+                              DateFormat("yyyy/MM/dd")
+                                  .format(data.results![index].releaseDate!),
                               style: TextStyle(
                                   color: mode
                                       ? Responsive.primerycolors
@@ -158,6 +171,38 @@ class MovieDetailsUi extends ConsumerWidget {
                           ),
                         ],
                       ),
+                      SizedBox(
+                        height: 40,
+                        width: 200,
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          physics: const ScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: c.length,
+                          itemBuilder: (context, index) {
+                            return Text(
+                              c[index],
+                              style: TextStyle(
+                                  color: mode
+                                      ? Responsive.primerycolors
+                                      : Colors.black,
+                                  fontFamily: "Righteous",
+                                  fontSize: sw * (9 / Responsive.width)),
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return Text(
+                              "/",
+                              style: TextStyle(
+                                  color: mode
+                                      ? Responsive.primerycolors
+                                      : Colors.black,
+                                  fontFamily: "Righteous",
+                                  fontSize: sw * (10 / Responsive.width)),
+                            );
+                          },
+                        ),
+                      )
                     ],
                   ),
                 ],
