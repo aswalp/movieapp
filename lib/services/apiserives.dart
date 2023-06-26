@@ -130,6 +130,72 @@ class Apiservices {
     }
     throw Exception();
   }
+
+//indian movies
+
+  Future<MainMovieModels> getmalayalammovies() async {
+    try {
+      Response response = await dio.get("/3/discover/movie",
+          queryParameters: {"with_original_language": "ml"});
+
+      if (response.statusCode == 200) {
+        String json = jsonEncode(response.data);
+
+        return mainMovieModelsFromJson(json);
+      }
+    } on DioException catch (e) {
+      throw Exception(e);
+    }
+    throw Exception();
+  }
+
+  Future<MainMovieModels> gethindimovies() async {
+    try {
+      Response response = await dio.get("/3/discover/movie",
+          queryParameters: {"with_original_language": "hi"});
+
+      if (response.statusCode == 200) {
+        String json = jsonEncode(response.data);
+
+        return mainMovieModelsFromJson(json);
+      }
+    } on DioException catch (e) {
+      throw Exception(e);
+    }
+    throw Exception();
+  }
+
+  Future<MainMovieModels> gettamilmovies() async {
+    try {
+      Response response = await dio.get("/3/discover/movie",
+          queryParameters: {"with_original_language": "ta"});
+
+      if (response.statusCode == 200) {
+        String json = jsonEncode(response.data);
+
+        return mainMovieModelsFromJson(json);
+      }
+    } on DioException catch (e) {
+      throw Exception(e);
+    }
+    throw Exception();
+  }
+
+  Future<MainMovieModels> gettelugumovies() async {
+    try {
+      Response response = await dio.get("/3/discover/movie",
+          queryParameters: {"with_original_language": "te"});
+
+      if (response.statusCode == 200) {
+        String json = jsonEncode(response.data);
+
+        return mainMovieModelsFromJson(json);
+      }
+    } on DioException catch (e) {
+      throw Exception(e);
+    }
+    throw Exception();
+  }
 }
 
 final apiservicesProvider = Provider<Apiservices>((ref) => Apiservices());

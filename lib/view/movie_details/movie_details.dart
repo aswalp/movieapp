@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:movieapp/models/genere_model.dart';
 import 'package:movieapp/models/main_movie_model.dart';
-import 'package:movieapp/provider/genre-provider/genre_provider.dart';
+// import 'package:movieapp/provider/genre-provider/genre_provider.dart';
 // import 'package:movieapp/models/newmoviesl_model.dart';
 import 'package:movieapp/responsive/responisive.dart';
 import 'package:movieapp/utilities/api_key.dart';
@@ -82,7 +82,7 @@ class MovieDetailsUi extends ConsumerWidget {
           width: sw,
           height: sh * (200 / Responsive.height),
           child: Image.network(
-            "${ApiKey.imagekey}/w500/${data.results![index].backdropPath ?? data.results![index].posterPath}",
+            "${ApiKey.imagekey}/w780/${data.results![index].backdropPath ?? data.results![index].posterPath}",
             fit: BoxFit.cover,
           ),
         ),
@@ -101,21 +101,27 @@ class MovieDetailsUi extends ConsumerWidget {
                     clipBehavior: Clip.none,
                     children: [
                       SizedBox(
-                        height: 80,
-                        width: 100,
+                        height: sh * (80 / Responsive.height),
+                        width: sw * (100 / Responsive.width),
                       ),
                       Positioned(
                         bottom: 1,
-                        child: Container(
-                          height: 130,
-                          width: 90,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                  image: NetworkImage(
-                                      "${ApiKey.imagekey}/w500/${data.results![index].posterPath!}"),
-                                  fit: BoxFit.cover)),
-                        ),
+                        child: data.results![index].posterPath == null
+                            ? Icon(
+                                Icons.block,
+                                color: mode ? Colors.white : Colors.black,
+                                size: 40,
+                              )
+                            : Container(
+                                height: sh * (130 / Responsive.height),
+                                width: sw * (90 / Responsive.width),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                            "${ApiKey.imagekey}/w500/${data.results![index].posterPath!}"),
+                                        fit: BoxFit.cover)),
+                              ),
                       )
                     ],
                   ),
@@ -134,13 +140,16 @@ class MovieDetailsUi extends ConsumerWidget {
                               fontSize: sw * (16 / Responsive.width)),
                         ),
                       ),
+                      SizedBox(
+                        height: sh * (10 / Responsive.height),
+                      ),
                       Row(
                         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           SizedBox(
-                            width: 150,
+                            width: sw * (150 / Responsive.width),
                             child: Text(
-                              DateFormat("yyyy/MM/dd")
+                              DateFormat("yyyy/MMM/dd")
                                   .format(data.results![index].releaseDate!),
                               style: TextStyle(
                                   color: mode
@@ -153,10 +162,10 @@ class MovieDetailsUi extends ConsumerWidget {
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const Icon(
+                              Icon(
                                 Icons.star,
                                 color: Colors.orange,
-                                size: 16,
+                                size: sw * (16 / Responsive.width),
                               ),
                               Text(
                                 "${data.results![index].voteAverage!.toStringAsFixed(1)}/10",
@@ -171,45 +180,44 @@ class MovieDetailsUi extends ConsumerWidget {
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: 40,
-                        width: 200,
-                        child: ListView.separated(
-                          shrinkWrap: true,
-                          physics: const ScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: c.length,
-                          itemBuilder: (context, index) {
-                            return Text(
-                              c[index],
-                              style: TextStyle(
-                                  color: mode
-                                      ? Responsive.primerycolors
-                                      : Colors.black,
-                                  fontFamily: "Righteous",
-                                  fontSize: sw * (9 / Responsive.width)),
-                            );
-                          },
-                          separatorBuilder: (BuildContext context, int index) {
-                            return Text(
-                              "/",
-                              style: TextStyle(
-                                  color: mode
-                                      ? Responsive.primerycolors
-                                      : Colors.black,
-                                  fontFamily: "Righteous",
-                                  fontSize: sw * (10 / Responsive.width)),
-                            );
-                          },
-                        ),
-                      )
                     ],
                   ),
                 ],
               ),
               SizedBox(
-                height: sh * (10 / Responsive.height),
+                height: sh * (5 / Responsive.height),
               ),
+              SizedBox(
+                height: sh * (40 / Responsive.height),
+                width: sw * (200 / Responsive.width),
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  physics: const ScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: c.length,
+                  itemBuilder: (context, index) {
+                    return Text(
+                      c[index],
+                      style: TextStyle(
+                          color: mode ? Responsive.primerycolors : Colors.black,
+                          fontFamily: "Righteous",
+                          fontSize: sw * (10 / Responsive.width)),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return Text(
+                      "/",
+                      style: TextStyle(
+                          color: mode ? Responsive.primerycolors : Colors.black,
+                          fontFamily: "Righteous",
+                          fontSize: sw * (10 / Responsive.width)),
+                    );
+                  },
+                ),
+              ),
+              // SizedBox(
+              //   height: sh * (5 / Responsive.height),
+              // ),
               const Divider(),
               Container(
                 padding: EdgeInsets.all(sw * (8 / Responsive.width)),

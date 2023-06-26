@@ -5,6 +5,7 @@ import 'package:movieapp/models/main_movie_model.dart';
 import 'package:movieapp/provider/searchprovider/searchprovider.dart';
 import 'package:movieapp/responsive/responisive.dart';
 import 'package:movieapp/utilities/api_key.dart';
+import 'package:movieapp/view/home_page/homepage.dart';
 import 'package:movieapp/view/home_page/widget/Detail_page_function.dart';
 // import 'package:movieapp/services/apiserives.dart';
 import 'package:movieapp/view/home_page/widget/profile_drawer.dart';
@@ -15,8 +16,9 @@ class SearchUi extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var search = ref.watch(searchMoviesProvider);
+    int nav = ref.watch(naviprovider);
 
-    TextEditingController _texteditingcontroller = TextEditingController();
+    // TextEditingController _texteditingcontroller = TextEditingController();
     bool mode = ref.watch(modeProvider);
 
     double sh = MediaQuery.of(context).size.height;
@@ -53,11 +55,11 @@ class SearchUi extends ConsumerWidget {
                 height: sh * (60 / Responsive.height),
                 width: sw,
                 child: TextField(
-                  controller: _texteditingcontroller,
+                  // controller: _texteditingcontroller,
                   onChanged: (value) {
                     ref.read(searchValueProvider).value = value;
                     print(value);
-                    _texteditingcontroller.text = value;
+                    // _texteditingcontroller.text = value;
                     ref.invalidate(searchMoviesProvider);
                   },
                   keyboardType: TextInputType.emailAddress,
@@ -107,6 +109,35 @@ class SearchUi extends ConsumerWidget {
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: const Color(0xff222222),
+        selectedItemColor: Responsive.primerycolors,
+        unselectedItemColor: Colors.white,
+        items: [
+          BottomNavigationBarItem(
+            label: "home",
+            icon: Icon(
+              nav == 0 ? Icons.home : Icons.home_outlined,
+            ),
+          ),
+          const BottomNavigationBarItem(
+            label: "Indian",
+            icon: Icon(
+              Icons.movie,
+            ),
+          ),
+          const BottomNavigationBarItem(
+            label: "Search",
+            icon: Icon(
+              Icons.search,
+            ),
+          ),
+        ],
+        currentIndex: nav,
+        onTap: (value) {
+          ref.read(naviprovider.notifier).state = value;
+        },
+      ),
     );
   }
 
@@ -132,10 +163,16 @@ class SearchUi extends ConsumerWidget {
                   width: 80,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: Image.network(
-                      "${ApiKey.imagekey}/w500/${data.results![index].posterPath!}",
-                      fit: BoxFit.cover,
-                    ),
+                    child: data.results![index].posterPath == null
+                        ? Icon(
+                            Icons.block,
+                            color: mode ? Colors.white : Colors.black,
+                            size: 40,
+                          )
+                        : Image.network(
+                            "${ApiKey.imagekey}/w500/${data.results![index].posterPath!}",
+                            fit: BoxFit.cover,
+                          ),
                   ),
                 ),
                 SizedBox(
@@ -189,78 +226,10 @@ class SearchUi extends ConsumerWidget {
         );
       },
       separatorBuilder: (BuildContext context, int index) {
-        return SizedBox(
+        return const SizedBox(
           height: 10,
         );
       },
     );
   }
 }
-
-
-
-
-
-
-// import 'package:flutter/material.dart';
-
-// class Search extends SearchDelegate {
-//   List<String> list = ["apple", "banana", "mango", "jackfruit", "grapes"];
-//   @override
-//   List<Widget>? buildActions(BuildContext context) {
-//     return [
-//       IconButton(
-//           onPressed: () {
-//             query = "";
-//           },
-//           icon: const Icon(Icons.clear))
-//     ];
-//   }
-
-//   @override
-//   Widget? buildLeading(BuildContext context) {
-//     return IconButton(
-//         onPressed: () {
-//           close(context, null);
-//         },
-//         icon: const Icon(Icons.arrow_back));
-//   }
-
-//   @override
-//   Widget buildResults(BuildContext context) {
-//     List<String> matchqury = [];
-
-//     for (String i in list) {
-//       if (i.toLowerCase().contains(query.toLowerCase())) {
-//         matchqury.add(query);
-//       }
-//     }
-//     return ListView.builder(
-//       itemCount: matchqury.length,
-//       itemBuilder: (context, index) {
-//         return ListTile(
-//           title: Text(matchqury[index]),
-//         );
-//       },
-//     );
-//   }
-
-//   @override
-//   Widget buildSuggestions(BuildContext context) {
-//     List<String> matchqury = [];
-
-//     for (String i in list) {
-//       if (i.toLowerCase().contains(query.toLowerCase())) {
-//         matchqury.add(i);
-//       }
-//     }
-//     return ListView.builder(
-//       itemCount: matchqury.length,
-//       itemBuilder: (context, index) {
-//         return ListTile(
-//           title: Text(matchqury[index]),
-//         );
-//       },
-//     );
-//   }
-// }
