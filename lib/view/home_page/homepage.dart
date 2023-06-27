@@ -19,7 +19,8 @@ import 'package:movieapp/view/home_page/widget/popularmovies.dart';
 import 'package:movieapp/view/home_page/widget/profile_drawer.dart';
 import 'package:movieapp/view/home_page/widget/trendingmovies.dart';
 import 'package:movieapp/view/home_page/widget/upcomingmovies.dart';
-import 'package:movieapp/view/indian_movies/widgets/indianmovies.dart';
+import 'package:movieapp/view/indian_movies/indianmovies.dart';
+// import 'package:movieapp/view/indian_movies/indianmovies.dart';
 import 'package:movieapp/view/search/search.dart';
 import 'package:movieapp/view/see_all/see_all.dart';
 
@@ -113,26 +114,26 @@ class HomePageUi extends ConsumerWidget {
                       ),
                     );
                   }),
-                  actions: [
-                    CircleAvatar(
-                      backgroundColor: const Color(0x54FFFFFF),
-                      child: IconButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const SearchUi(),
-                                ));
+                  // actions: [
+                  //   CircleAvatar(
+                  //     backgroundColor: const Color(0x54FFFFFF),
+                  //     child: IconButton(
+                  //         onPressed: () {
+                  //           Navigator.push(
+                  //               context,
+                  //               MaterialPageRoute(
+                  //                 builder: (context) => const SearchUi(),
+                  //               ));
 
-                            // showSearch(context: context, delegate: Search());
-                          },
-                          icon: Icon(
-                            Icons.search,
-                            color:
-                                !mode ? const Color(0xff0a141c) : Colors.white,
-                          )),
-                    ),
-                  ],
+                  //           // showSearch(context: context, delegate: Search());
+                  //         },
+                  //         icon: Icon(
+                  //           Icons.search,
+                  //           color:
+                  //               !mode ? const Color(0xff0a141c) : Colors.white,
+                  //         )),
+                  //   ),
+                  // ],
                 ),
                 SliverToBoxAdapter(
                   child: Padding(
@@ -284,9 +285,9 @@ class HomePageUi extends ConsumerWidget {
             ),
 
             bottomNavigationBar: BottomNavigationBar(
-              backgroundColor: const Color(0xff222222),
-              selectedItemColor: Responsive.primerycolors,
-              unselectedItemColor: Colors.white,
+              backgroundColor: mode ? const Color(0xff222222) : Colors.white,
+              selectedItemColor: mode ? Responsive.primerycolors : Colors.red,
+              unselectedItemColor: mode ? Colors.white : Colors.black,
               items: [
                 BottomNavigationBarItem(
                   label: "home",

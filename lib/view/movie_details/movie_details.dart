@@ -148,16 +148,18 @@ class MovieDetailsUi extends ConsumerWidget {
                         children: [
                           SizedBox(
                             width: sw * (150 / Responsive.width),
-                            child: Text(
-                              DateFormat("yyyy/MMM/dd")
-                                  .format(data.results![index].releaseDate!),
-                              style: TextStyle(
-                                  color: mode
-                                      ? Responsive.primerycolors
-                                      : Colors.black,
-                                  fontFamily: "Righteous",
-                                  fontSize: sw * (16 / Responsive.width)),
-                            ),
+                            child: data.results![index].releaseDate != null
+                                ? Text(
+                                    DateFormat("yyyy/MMM/dd").format(
+                                        data.results![index].releaseDate!),
+                                    style: TextStyle(
+                                        color: mode
+                                            ? Responsive.primerycolors
+                                            : Colors.black,
+                                        fontFamily: "Righteous",
+                                        fontSize: sw * (16 / Responsive.width)),
+                                  )
+                                : const Text(""),
                           ),
                           Row(
                             mainAxisSize: MainAxisSize.min,

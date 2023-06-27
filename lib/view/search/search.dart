@@ -26,14 +26,15 @@ class SearchUi extends ConsumerWidget {
     return Scaffold(
       backgroundColor: mode ? const Color(0xff0a141c) : Colors.white,
       appBar: AppBar(
-        leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(
-              Icons.arrow_back,
-              color: !mode ? const Color(0xff0a141c) : Colors.white,
-            )),
+        automaticallyImplyLeading: false,
+        // leading: IconButton(
+        //     onPressed: () {
+        //       Navigator.pop(context);
+        //     },
+        //     icon: Icon(
+        //       Icons.arrow_back,
+        //       color: !mode ? const Color(0xff0a141c) : Colors.white,
+        //     )),
         backgroundColor: mode ? const Color(0xff0a141c) : Colors.white,
         centerTitle: true,
         title: Text(
@@ -97,22 +98,25 @@ class SearchUi extends ConsumerWidget {
               ),
             ),
             SizedBox(
-              height: sh,
+              height: sh * 0.9,
               child: search.when(
-                data: (data) => searchlist(data, sw, mode),
-                error: (error, stackTrace) => Text("error"),
+                data: (data) => searchlist(data, sw, mode, sh),
+                error: (error, stackTrace) => const Text("error"),
                 loading: () => const Center(
                   child: CircularProgressIndicator(),
                 ),
               ),
-            )
+            ),
+            // SizedBox(
+            //   height: 60,
+            // ),
           ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color(0xff222222),
-        selectedItemColor: Responsive.primerycolors,
-        unselectedItemColor: Colors.white,
+        backgroundColor: mode ? const Color(0xff222222) : Colors.white,
+        selectedItemColor: mode ? Responsive.primerycolors : Colors.red,
+        unselectedItemColor: mode ? Colors.white : Colors.black,
         items: [
           BottomNavigationBarItem(
             label: "home",
@@ -141,7 +145,7 @@ class SearchUi extends ConsumerWidget {
     );
   }
 
-  ListView searchlist(MainMovieModels data, double sw, bool mode) {
+  ListView searchlist(MainMovieModels data, double sw, bool mode, double sh) {
     // print(data);
     return ListView.separated(
       // shrinkWrap: true,
@@ -152,15 +156,15 @@ class SearchUi extends ConsumerWidget {
           onTap: () => detailfunction(context, searchMoviesProvider, index),
           child: Container(
             padding: EdgeInsets.all(5),
-            height: 120,
+            height: sh * (120 / Responsive.height),
             width: sw,
             // decoration: BoxDecoration(color: Colors.transparent),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 120,
-                  width: 80,
+                  height: sh * (120 / Responsive.height),
+                  width: sw * (80 / Responsive.width),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: data.results![index].posterPath == null
@@ -176,14 +180,14 @@ class SearchUi extends ConsumerWidget {
                   ),
                 ),
                 SizedBox(
-                  width: 10,
+                  width: sw * (10 / Responsive.width),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                        width: 250,
+                        width: sw * (250 / Responsive.width),
                         child: Text(
                           data.results![index].title!,
                           style: TextStyle(
@@ -210,14 +214,19 @@ class SearchUi extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    Text(
-                      DateFormat("yyyy")
-                          .format(data.results![index].releaseDate!),
-                      style: TextStyle(
-                          color: mode ? Responsive.primerycolors : Colors.black,
-                          fontFamily: "Righteous",
-                          fontSize: sw * (12 / Responsive.width)),
-                    )
+                    // ignore: unrelated_type_equality_checks
+                    data.results![index].releaseDate != null
+                        ? Text(
+                            DateFormat("yyyy")
+                                .format(data.results![index].releaseDate!),
+                            style: TextStyle(
+                                color: mode
+                                    ? Responsive.primerycolors
+                                    : Colors.black,
+                                fontFamily: "Righteous",
+                                fontSize: sw * (12 / Responsive.width)),
+                          )
+                        : const Text(""),
                   ],
                 ),
               ],

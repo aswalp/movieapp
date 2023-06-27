@@ -8,7 +8,7 @@ import 'package:movieapp/utilities/api_key.dart';
 import 'package:movieapp/view/home_page/homepage.dart';
 import 'package:movieapp/view/home_page/widget/profile_drawer.dart';
 
-import '../../home_page/widget/Detail_page_function.dart';
+import '../home_page/widget/Detail_page_function.dart';
 
 class IndianMovies extends ConsumerWidget {
   const IndianMovies({super.key});
@@ -32,6 +32,7 @@ class IndianMovies extends ConsumerWidget {
     return Scaffold(
       backgroundColor: mode ? const Color(0xff222222) : Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: mode ? const Color(0xff222222) : Colors.white,
         centerTitle: true,
         title: Text(
@@ -48,7 +49,7 @@ class IndianMovies extends ConsumerWidget {
             child: FlutterToggleTab(
               // width in percent
               width: 90,
-              borderRadius: 30,
+              borderRadius: 5,
               height: 30,
               selectedIndex: ind,
               selectedBackgroundColors: const [
@@ -80,9 +81,9 @@ class IndianMovies extends ConsumerWidget {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color(0xff222222),
-        selectedItemColor: Responsive.primerycolors,
-        unselectedItemColor: Colors.white,
+        backgroundColor: mode ? const Color(0xff222222) : Colors.white,
+        selectedItemColor: mode ? Responsive.primerycolors : Colors.red,
+        unselectedItemColor: mode ? Colors.white : Colors.black,
         items: [
           BottomNavigationBarItem(
             label: "home",
