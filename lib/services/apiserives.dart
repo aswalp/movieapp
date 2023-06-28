@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movieapp/models/CastModel.dart';
 import 'package:movieapp/models/main_movie_model.dart';
 import 'package:movieapp/utilities/api_key.dart';
 
@@ -114,6 +115,7 @@ class Apiservices {
     }
     throw Exception();
   }
+//!search movies
 
   Future<MainMovieModels> getsearchmovies(String movie) async {
     try {
@@ -130,8 +132,9 @@ class Apiservices {
     }
     throw Exception();
   }
+  //!----------------------------------------------------------------
 
-//indian movies
+//!indian movies
 
   Future<MainMovieModels> getmalayalammovies() async {
     try {
@@ -190,6 +193,26 @@ class Apiservices {
         String json = jsonEncode(response.data);
 
         return mainMovieModelsFromJson(json);
+      }
+    } on DioException catch (e) {
+      throw Exception(e);
+    }
+    throw Exception();
+  }
+
+  //!----------------------------------------------------------------
+  //!cast
+
+  Future<CastAndCrewModel> getcast(int movieid) async {
+    try {
+      Response response = await dio.get(
+        "/3/movie/$movieid/credits",
+      );
+
+      if (response.statusCode == 200) {
+        String json = jsonEncode(response.data);
+
+        return castAndCrewModelFromJson(json);
       }
     } on DioException catch (e) {
       throw Exception(e);

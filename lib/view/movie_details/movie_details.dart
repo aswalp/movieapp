@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:movieapp/models/CastModel.dart';
 import 'package:movieapp/models/genere_model.dart';
 import 'package:movieapp/models/main_movie_model.dart';
+import 'package:movieapp/provider/castprovider/casrprovider.dart';
 // import 'package:movieapp/provider/genre-provider/genre_provider.dart';
 // import 'package:movieapp/models/newmoviesl_model.dart';
 import 'package:movieapp/responsive/responisive.dart';
@@ -76,6 +78,10 @@ class MovieDetailsUi extends ConsumerWidget {
     var genlist = Genlist.g;
 
     var c = generefunction(id!, genlist);
+
+    // ref.read(movieidprovider.notifier).state = data.results![index].id!;
+
+    var cast = ref.watch(castprovider(data.results![index].id!));
     return Column(
       children: [
         SizedBox(
@@ -231,10 +237,88 @@ class MovieDetailsUi extends ConsumerWidget {
                       fontSize: sw * (18 / Responsive.width)),
                 ),
               ),
+              Text(
+                "Cast",
+                style: TextStyle(
+                    decorationThickness: 3,
+                    decorationStyle: TextDecorationStyle.dashed,
+                    decorationColor:
+                        mode ? Responsive.primerycolors : Colors.black,
+                    decoration: TextDecoration.underline,
+                    color: mode ? Responsive.primerycolors : Colors.black,
+                    fontFamily: "Righteous",
+                    fontSize: sw * (18 / Responsive.width)),
+              ),
+              SizedBox(
+                height: 160,
+                child: cast.when(
+                  data: (data) => buildcast(data, mode, sw, sh),
+                  error: (error, stackTrace) => Text(error.toString()),
+                  loading: () => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+              )
             ],
           ),
         )
       ],
+    );
+  }
+
+  ListView buildcast(CastAndCrewModel data, bool mode, double sw, double sh) {
+    return ListView.separated(
+      scrollDirection: Axis.horizontal,
+      itemCount: data.cast!.length,
+      shrinkWrap: true,
+      physics: const BouncingScrollPhysics(),
+      itemBuilder: (context, index) {
+        return Row(
+          children: [
+            SizedBox(
+              height: 100,
+              width: 60,
+              child: data.cast![index].profilePath == null
+                  ? const Icon(
+                      Icons.person,
+                      color: Colors.white,
+                    )
+                  : Image.network(
+                      "${ApiKey.imagekey}/w500${data.cast![index].profilePath!}",
+                      fit: BoxFit.cover,
+                    ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  data.cast![index].name!,
+                  style: TextStyle(
+                      color: mode ? Colors.white : Colors.black,
+                      fontFamily: "Righteous",
+                      fontSize: sw * (14 / Responsive.width)),
+                ),
+                SizedBox(
+                  width: sw * .4,
+                  child: Text(
+                    data.cast![index].character!,
+                    style: TextStyle(
+                        color: mode ? Colors.white : Colors.black,
+                        fontFamily: "Righteous",
+                        fontSize: sw * (10 / Responsive.width)),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+      separatorBuilder: (BuildContext context, int index) {
+        return SizedBox(
+          width: sw * (8 / Responsive.width),
+        );
+      },
     );
   }
 }
